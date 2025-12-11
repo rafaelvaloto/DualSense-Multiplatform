@@ -1,6 +1,9 @@
-<div align="center">
-<h1><i>GamepadCore_</i></h1>
-</div>
+<h1 align="center"><i>GamepadCore_</i></h1>
+
+<p align="center">
+Modern, policy-based C++ library for advanced gamepad features (DualSense/DS4). Engine-agnostic architecture designed for Unreal, Unity, Godot, and O3DE.
+<br />
+<br />
 
 <div align="center">
 

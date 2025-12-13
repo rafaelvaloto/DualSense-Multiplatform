@@ -80,6 +80,41 @@ GamepadCore/
 
 ## 🛠️ Usage Example (Concept)
 
+```cpp
+// 1.
+// Initialize PlatformHardware, (e.g., FLinuxHardware FWindowsHardware FMacHardware, FSonyHardware)
+std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatform::FLinuxHardware>();
+IPlatformHardwareInfo::SetInstance(std::move(LinuxInstance));
+
+// 2.	
+// Initialize DeviceResgistry
+FDeviceRegistry::Initialize();
+
+// 3.
+// Register a new device
+std::unique_ptr<FDeviceRegistry::FRegistryLogic> FDeviceRegistry::RegistryImplementation = nullptr;
+RegistryImplementation = std::make_unique<FRegistryLogic>();
+
+
+void FDeviceRegistry::DiscoverDevices(float DeltaTime)
+{
+	if (RegistryImplementation)
+	{
+		return RegistryImplementation->PlugAndPlay(DeltaTime);
+	}
+}
+
+ISonyGamepad* FDeviceRegistry::GetLibraryInstance(FInputDeviceId DeviceId)
+{
+	if (RegistryImplementation)
+	{
+		return RegistryImplementation->GetLibrary(DeviceId);
+	}
+	return nullptr;
+}
+
+```
+
 1. Initialize with Injection
 GamepadCore uses dependency injection to link the Core with your specific platform/engine environment.
 ```cpp
@@ -128,6 +163,39 @@ The `Adapters/` directory contains **reference implementations** and examples. T
 * **Godot:** GDExtension reference code.
 
 You are encouraged to copy these adapters into your project and modify them to suit your specific architectural needs.
+
+## 🧑‍💻 Contributing (Build & sanity checks)
+
+GamepadCore is meant to be consumed **from source** (e.g., compiled inside an engine/plugin build).  
+This repository still provides a CMake project so contributors can quickly validate changes locally.
+
+### Requirements
+- CMake >= 3.20
+- C++20 compiler (Clang/GCC/MSVC)
+- Ninja (recommended) or Make
+
+### 1) Configure (one time per build type)
+
+```bash
+cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug
+cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release
+```
+
+### 2) Format (before pushing)
+```bash
+cmake --build cmake-build-debug --target GamepadCoreFormat -j
+```
+### 3) Compile (after any change)
+
+```bash
+cmake --build cmake-build-debug --target GamepadCore -j
+cmake --build cmake-build-release --target GamepadCore -j
+````
+
+### Notes
+- Build artifacts (like `libGamepadCore.a`) are generated inside the build folder (e.g. `cmake-build-release/Source/`).
+- Contributors generally should **not** commit build directories (`cmake-build-*`).
+
 
 ## 📄 License
 

@@ -3,9 +3,9 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadSensors.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Core/Types/Structs/Config/GamepadSensors.h"
 #include "InputContext.h"
 #include "OutputContext.h"
 
@@ -42,7 +42,7 @@ struct FDeviceContext
 	 * invalid or disconnected handles can result in undefined behavior. For
 	 * instance, it may hold `INVALID_HANDLE_VALUE` when invalid or disconnected.
 	 */
-	FPlatformDeviceHandle Handle;
+	FPlatformDeviceHandle Handle{};
 	/**
 	 * @brief Represents a file or resource path in the context of device
 	 * management.

@@ -3,16 +3,16 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 
-#include "GamepadCore/Source/Public/Implementations/Libraries/DualShock/DualShockLibrary.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/IPlatformHardwareInfo.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadInput.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadOutput.h"
+#include "Implementations/Libraries/DualShock/DualShockLibrary.h"
+#include "Core/Interfaces/IPlatformHardwareInfo.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Implementations/Utils/GamepadInput.h"
+#include "Implementations/Utils/GamepadOutput.h"
 
 bool FDualShockLibrary::Initialize(const FDeviceContext& Context)
 {
 	SetDeviceContexts(Context);
-	SetLightbar({0, 0, 220, 0}, 0.0f, 0.0f);
+	SetLightbarFlash({0, 0, 220, 0}, 0.0f, 0.0f);
 	return true;
 }
 
@@ -61,7 +61,7 @@ void FDualShockLibrary::SetVibration(std::uint8_t LeftRumble, std::uint8_t Right
 	}
 }
 
-void FDualShockLibrary::SetLightbar(FDSColor Color, float BrithnessTime, float ToggleTime)
+void FDualShockLibrary::SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime)
 {
 	FDeviceContext* Context = GetMutableDeviceContext();
 	FOutputContext* HidOutput = &Context->Output;
@@ -76,5 +76,5 @@ void FDualShockLibrary::SetLightbar(FDSColor Color, float BrithnessTime, float T
 
 void FDualShockLibrary::ResetLights()
 {
-	SetLightbar({0, 0, 255, 0}, 0.0f, 0.0f);
+	SetLightbarFlash({0, 0, 255, 0}, 0.0f, 0.0f);
 }

@@ -3,17 +3,13 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-
-using namespace DSCoreTypes;
 
 class IGamepadLightbar
 {
 public:
 	virtual ~IGamepadLightbar() = default;
 	/**
-	 * Sets the lightbar color and associated timing parameters on the gamepad.
+	 * Sets the lightbar flash color and associated timing parameters on the gamepad.
 	 *
 	 * @param Color The color to set the lightbar to, represented as an FColor.
 	 * @param BrithnessTime The time duration for setting the brightness effect.
@@ -21,7 +17,13 @@ public:
 	 * @param ToggleTime The time interval for toggling the lightbar. Defaults to
 	 * 0.0f.
 	 */
-	virtual void SetLightbar(FDSColor Color, float BrithnessTime, float ToggleTime) = 0;
+	virtual void SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime) = 0;
+	/**
+	 * Sets the lightbar flash color and associated timing parameters on the gamepad.
+	 *
+	 * @param Color The color to set the lightbar to, represented as an FColor.
+	 */
+	virtual void SetLightbar(DSCoreTypes::FDSColor Color) = 0;
 	/**
 	 * Sets the LED associated with the player on the Sony gamepad to a specified
 	 * brightness level.

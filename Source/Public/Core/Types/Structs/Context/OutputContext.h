@@ -4,16 +4,13 @@
 // Targets: Windows, Linux, macOS.
 
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadAudio.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadFeature.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadLightbar.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadLigthbarFlash.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadPlayerLed.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadRumbles.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Config/GamepadTriggersHaptic.h"
-
-using namespace DSCoreTypes;
+#include "Core/Types/Structs/Config/GamepadAudio.h"
+#include "Core/Types/Structs/Config/GamepadFeature.h"
+#include "Core/Types/Structs/Config/GamepadLightbar.h"
+#include "Core/Types/Structs/Config/GamepadLigthbarFlash.h"
+#include "Core/Types/Structs/Config/GamepadPlayerLed.h"
+#include "Core/Types/Structs/Config/GamepadRumbles.h"
+#include "Core/Types/Structs/Config/GamepadTriggersHaptic.h"
 
 /**
  * @class FOutputContext

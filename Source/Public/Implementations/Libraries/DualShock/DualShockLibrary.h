@@ -2,9 +2,9 @@
 // Created for: WindowsDualShock_ds5w - Plugin to support DualShock controller
 // on Windows. Planned Release Year: 2025
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
-#include "GamepadCore/Source/Public/Implementations/Libraries/Base/SonyGamepadAbstract.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "Implementations/Libraries/Base/SonyGamepadAbstract.h"
 
 class FDualShockLibrary : public SonyGamepadAbstract
 {
@@ -67,7 +67,7 @@ public:
 	 * @param ToggleTime A float value representing the duration (in seconds) for
 	 * which the lightbar is toggled off during a flash cycle.
 	 */
-	void SetLightbar(FDSColor Color, float BrithnessTime, float ToggleTime) override;
+	void SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime) override;
 	/**
 	 * Stops all currently active operations or actions associated with the
 	 * interface. This method must be implemented by any derived class to handle

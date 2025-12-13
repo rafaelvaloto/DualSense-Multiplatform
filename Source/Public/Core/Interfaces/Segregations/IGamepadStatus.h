@@ -5,9 +5,9 @@
 
 #pragma once
 
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
 
 class IGamepadStatus
 {

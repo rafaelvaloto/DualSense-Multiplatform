@@ -3,9 +3,6 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-
-using namespace DSCoreTypes;
 
 /**
  * @brief Enum class representing various LED microphone states.
@@ -23,11 +20,11 @@ enum class EDSMic : std::uint8_t
 enum class EDSPlayer : std::uint8_t
 {
 	Off = 0,
-	One = LedMasks::Middle,
-	Two = LedMasks::MiddleRight | LedMasks::MiddleLeft,
-	Three = LedMasks::Right | LedMasks::Middle | LedMasks::Left,
-	All = LedMasks::Right | LedMasks::MiddleRight | LedMasks::MiddleLeft |
-	      LedMasks::Left
+	One = DSCoreTypes::LedMasks::Middle,
+	Two = DSCoreTypes::LedMasks::MiddleRight | DSCoreTypes::LedMasks::MiddleLeft,
+	Three = DSCoreTypes::LedMasks::Right | DSCoreTypes::LedMasks::Middle | DSCoreTypes::LedMasks::Left,
+	All = DSCoreTypes::LedMasks::Right | DSCoreTypes::LedMasks::MiddleRight | DSCoreTypes::LedMasks::MiddleLeft |
+	      DSCoreTypes::LedMasks::Left
 };
 
 /**

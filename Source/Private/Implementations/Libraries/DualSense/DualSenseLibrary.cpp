@@ -3,16 +3,16 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 
-#include "GamepadCore/Source/Public/Implementations/Libraries/DualSense/DualSenseLibrary.h"
-#include "GamepadCore/Source/Public/Core/Algorithms/MadgwickAhrs.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/IPlatformHardwareInfo.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadInput.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadOutput.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadSensors.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadTouch.h"
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadTrigger.h"
+#include "Implementations/Libraries/DualSense/DualSenseLibrary.h"
+#include "Core/Algorithms/MadgwickAhrs.h"
+#include "Core/Interfaces/IPlatformHardwareInfo.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "Implementations/Utils/GamepadInput.h"
+#include "Implementations/Utils/GamepadOutput.h"
+#include "Implementations/Utils/GamepadSensors.h"
+#include "Implementations/Utils/GamepadTouch.h"
+#include "Implementations/Utils/GamepadTrigger.h"
 
 using namespace FDualSenseTriggerComposer;
 
@@ -53,7 +53,7 @@ void FDualSenseLibrary::ResetLights()
 	UpdateOutput();
 }
 
-void FDualSenseLibrary::SetLightbar(FDSColor Color, float BrithnessTime, float ToggleTime)
+void FDualSenseLibrary::SetLightbar(DSCoreTypes::FDSColor Color)
 {
 	FDeviceContext* Context = GetMutableDeviceContext();
 	if (!Context)
@@ -102,6 +102,7 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 	ResetLights();
 	return true;
 }
+
 void FDualSenseLibrary::UpdateInput(float Delta)
 {
 	FDeviceContext* Context = GetMutableDeviceContext();
@@ -126,8 +127,8 @@ void FDualSenseLibrary::UpdateInput(float Delta)
 
 	if (IsEnableAccelerometerAndGyroscope())
 	{
-		DSVector3D GyroDeg;
-		DSVector3D AccelG;
+		DSCoreTypes::DSVector3D GyroDeg;
+		DSCoreTypes::DSVector3D AccelG;
 
 		using namespace FGamepadSensors;
 		ProcessMotionData(&Context->Buffer[Padding], Context->Calibration, GyroDeg,
@@ -139,19 +140,19 @@ void FDualSenseLibrary::UpdateInput(float Delta)
 		}
 		constexpr float GToMSq = GRAVITY_MS2;
 		constexpr float DegToRad = 3.1415926535f / 180.0f;
-		const DSVector3D AccelRad = {AccelG.X * GToMSq, AccelG.Y * GToMSq,
-		                             AccelG.Z * GToMSq};
-		const DSVector3D GyroRad = {GyroDeg.X * DegToRad, GyroDeg.Y * DegToRad,
-		                            GyroDeg.Z * DegToRad}; // deg/s -> rad/s
+		const DSCoreTypes::DSVector3D AccelRad = {AccelG.X * GToMSq, AccelG.Y * GToMSq,
+		                                          AccelG.Z * GToMSq};
+		const DSCoreTypes::DSVector3D GyroRad = {GyroDeg.X * DegToRad, GyroDeg.Y * DegToRad,
+		                                         GyroDeg.Z * DegToRad}; // deg/s -> rad/s
 		MadgwickFilter.UpdateImu(GyroRad.Z, GyroRad.Y, -GyroRad.X, AccelRad.Z,
 		                         AccelRad.Y, -AccelRad.X, Delta);
 
 		float qw, qx, qy, qz;
 		MadgwickFilter.GetQuaternion(qw, qx, qy, qz);
 
-		constexpr DSQuat RotX180(1.0f, 0.0f, 0.0f, 0.0f);
-		const DSQuat RawQuat(qx, qy, qz, qw);
-		const DSQuat SensorQuat = RotX180 * RawQuat;
+		constexpr DSCoreTypes::DSQuat RotX180(1.0f, 0.0f, 0.0f, 0.0f);
+		const DSCoreTypes::DSQuat RawQuat(qx, qy, qz, qw);
+		const DSCoreTypes::DSQuat SensorQuat = RotX180 * RawQuat;
 
 		InputToFill->Gyroscope.X = GyroDeg.X;
 		InputToFill->Gyroscope.Y = GyroDeg.Z;
@@ -168,6 +169,28 @@ void FDualSenseLibrary::UpdateInput(float Delta)
 	}
 
 	Context->SwapInputBuffers();
+}
+
+void FDualSenseLibrary::DualSenseSettings(std::uint8_t bIsMic, std::uint8_t bIsHeadset, std::uint8_t bIsSpeaker, std::uint8_t MicVolume, std::uint8_t AudioVolume, std::uint8_t RumbleMode, std::uint8_t RumbleReduce, std::uint8_t TriggerReduce)
+{
+	FDeviceContext* Context = GetMutableDeviceContext();
+	Context->Output.Audio.MicStatus = bIsMic;
+	Context->Output.Audio.MicVolume = MicVolume;
+	Context->Output.Audio.HeadsetVolume = AudioVolume;
+	Context->Output.Audio.SpeakerVolume = AudioVolume;
+
+	Context->Output.Audio.Mode = 0x08;
+	if (bIsHeadset == 1 && bIsSpeaker == 1)
+	{
+		Context->Output.Audio.Mode = 0x21;
+	}
+	else if (bIsHeadset == 0 && bIsSpeaker == 1)
+	{
+		Context->Output.Audio.Mode = 0x31;
+	}
+
+	Context->Output.Feature = {RumbleMode, RumbleReduce, TriggerReduce};
+	UpdateOutput();
 }
 
 void FDualSenseLibrary::UpdateOutput()
@@ -269,10 +292,12 @@ void FDualSenseLibrary::SetCustomTrigger(
 }
 
 void FDualSenseLibrary::SetPlayerLed(EDSPlayer Led, std::uint8_t Brightness)
-{}
+{
+}
 
 void FDualSenseLibrary::SetMicrophoneLed(EDSMic Led)
-{}
+{
+}
 
 void FDualSenseLibrary::AudioHapticUpdate(std::vector<std::uint8_t> Data)
 {

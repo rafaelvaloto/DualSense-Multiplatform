@@ -3,12 +3,12 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Interfaces/Segregations/IGamepadAudioHaptics.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/Segregations/IGamepadTrigger.h"
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
-#include "GamepadCore/Source/Public/Implementations/Libraries/Base/SonyGamepadAbstract.h"
+#include "Core/Interfaces/Segregations/IGamepadAudioHaptics.h"
+#include "Core/Interfaces/Segregations/IGamepadTrigger.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "Implementations/Libraries/Base/SonyGamepadAbstract.h"
 
 /**
  * @class FDualSenseLibrary
@@ -65,6 +65,25 @@ public:
 	 * @return A pointer to the IGamepadAudioHaptics instance.
 	 */
 	virtual IGamepadAudioHaptics* GetIGamepadHaptics() override { return this; }
+
+	/**
+	 * @brief Configures settings for the PlayStation DualSense controller.
+	 *
+	 * This method allows the configuration of various audio and controller features,
+	 * such as the microphone, headset, speaker, volume levels, and vibration settings.
+	 * It is typically used to apply specific settings to enhance or modify the user's
+	 * gameplay experience based on the connected DualSense controller's capabilities.
+	 *
+	 * @param bIsMic Indicates whether the microphone is enabled (1) or disabled (0).
+	 * @param bIsHeadset Indicates whether the headset is connected (1) or not (0).
+	 * @param bIsSpeaker Indicates whether the speaker is enabled (1) or disabled (0).
+	 * @param MicVolume Specifies the microphone volume level (0–255).
+	 * @param AudioVolume Specifies the audio volume level for the headset or speaker (0–255).
+	 * @param RumbleMode Configures the rumble/vibration mode (value range is implementation-specific).
+	 * @param RumbleReduce Reduces the intensity of the rumble effect (value range is implementation-specific).
+	 * @param TriggerReduce Adjusts the sensitivity of the adaptive triggers (value range is implementation-specific).
+	 */
+	virtual void DualSenseSettings(std::uint8_t bIsMic, std::uint8_t bIsHeadset, std::uint8_t bIsSpeaker, std::uint8_t MicVolume, std::uint8_t AudioVolume, std::uint8_t RumbleMode, std::uint8_t RumbleReduce, std::uint8_t TriggerReduce) override;
 
 	/**
 	 * @brief Updates the output state of the gamepad.
@@ -340,12 +359,10 @@ public:
 	 * transitions. It communicates directly with the device context to apply the
 	 * desired changes.
 	 *
-	 * @param Color The desired color of the lightbar, represented as an FColor
-	 * object.
-	 * @param BrithnessTime The duration for the lightbar's brightness transition.
-	 * @param ToggleTime The duration for toggling the lightbar state.
+	 * @param Color The desired color of the lightbar, represented as an FDSColor
 	 */
-	virtual void SetLightbar(FDSColor Color, float BrithnessTime, float ToggleTime) override;
+	virtual void SetLightbar(DSCoreTypes::FDSColor Color) override;
+	virtual void SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime) override {};
 	/**
 	 * @brief Updates the haptic feedback system of the DualSense controller with
 	 * audio data.

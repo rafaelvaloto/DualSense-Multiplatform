@@ -4,8 +4,6 @@
 // Targets: Windows, Linux, macOS.
 
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-using namespace DSCoreTypes;
 
 class IGamepadSensors
 {

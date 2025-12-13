@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
 #include <memory>
 #include <vector>
 
@@ -83,7 +83,7 @@ public:
 	 * @param Devices A reference to an array of FDeviceContext objects
 	 *                that will be populated with the detected device information.
 	 */
-	static void Discover(std::vector<FDeviceContext>& Devices);
+	static void Detect(std::vector<FDeviceContext>& Devices);
 	/**
 	 * Creates a handle for the FCommonsDeviceInfo class using the provided device context.
 	 *

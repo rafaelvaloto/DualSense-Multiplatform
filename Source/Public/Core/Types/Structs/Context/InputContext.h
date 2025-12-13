@@ -3,8 +3,8 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/ECoreGamepad.h"
 
 /**
  * @struct FInputContext
@@ -63,15 +63,15 @@ struct FInputContext
 	float AnalogDeadZone = 0.09f;
 
 	// Analogs
-	DSVector2D LeftAnalog = {0, 0};
-	DSVector2D RightAnalog = {0, 0};
+	DSCoreTypes::DSVector2D LeftAnalog = {0, 0};
+	DSCoreTypes::DSVector2D RightAnalog = {0, 0};
 	float LeftTriggerAnalog = 0.0f;
 	float RightTriggerAnalog = 0.0f;
 
-	DSVector3D Gyroscope = {0, 0, 0};
-	DSVector3D Accelerometer = {0, 0, 0};
-	DSVector3D Gravity = {0, 0, 0};
-	DSVector3D Tilt = {0, 0, 0};
+	DSCoreTypes::DSVector3D Gyroscope = {0, 0, 0};
+	DSCoreTypes::DSVector3D Accelerometer = {0, 0, 0};
+	DSCoreTypes::DSVector3D Gravity = {0, 0, 0};
+	DSCoreTypes::DSVector3D Tilt = {0, 0, 0};
 
 	// touch
 	std::int32_t TouchId = 0;
@@ -86,19 +86,19 @@ struct FInputContext
 	float DirectionAngle = 0.0f;
 	std::uint8_t DirectionRaw = 0;
 
-	DSVector2D P1_Current = {0, 0};
-	DSVector2D P1_Last = {0, 0};
+	DSCoreTypes::DSVector2D P1_Current = {0, 0};
+	DSCoreTypes::DSVector2D P1_Last = {0, 0};
 
-	DSVector2D P2_Current = {0, 0};
-	DSVector2D P2_Last = {0, 0};
+	DSCoreTypes::DSVector2D P2_Current = {0, 0};
+	DSCoreTypes::DSVector2D P2_Last = {0, 0};
 
 	float ZoomDelta = 0.0f;
-	DSVector2D SwipeVector = {0, 0};
-	DSVector2D ScrollVelocity = {0, 0};
+	DSCoreTypes::DSVector2D SwipeVector = {0, 0};
+	DSCoreTypes::DSVector2D ScrollVelocity = {0, 0};
 
-	DSVector2D TouchRadius = {0, 0};
-	DSVector2D TouchPosition = {0, 0};
-	DSVector2D TouchRelative = {0, 0};
+	DSCoreTypes::DSVector2D TouchRadius = {0, 0};
+	DSCoreTypes::DSVector2D TouchPosition = {0, 0};
+	DSCoreTypes::DSVector2D TouchRelative = {0, 0};
 	EDSTouchInteraction TouchInteraction = EDSTouchInteraction::None;
 
 	// Buttons

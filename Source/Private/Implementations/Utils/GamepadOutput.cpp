@@ -3,11 +3,11 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 
-#include "GamepadCore/Source/Public/Implementations/Utils/GamepadOutput.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/IPlatformHardwareInfo.h"
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
+#include "Implementations/Utils/GamepadOutput.h"
+#include "Core/Interfaces/IPlatformHardwareInfo.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
 
 const std::uint32_t FGamepadOutput::CRCSeed = 0xeada2d49;
 

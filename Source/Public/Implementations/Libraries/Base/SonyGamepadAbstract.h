@@ -3,10 +3,10 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Algorithms/MadgwickAhrs.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/ISonyGamepad.h"
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
+#include "Core/Algorithms/MadgwickAhrs.h"
+#include "Core/Interfaces/ISonyGamepad.h"
+#include "Core/Types/DSCoreTypes.h"
+#include "Core/Types/ECoreGamepad.h"
 
 /**
  * @class SonyGamepadAbstract
@@ -96,17 +96,10 @@ public:
 	 * the termination of all ongoing processes.
 	 */
 	void ResetLights() override {}
-	/**
-	 * Sets the lightbar color and associated timing parameters on the gamepad
-	 * DualShock4.
-	 *
-	 * @param Color The color to set the lightbar to, represented as an FDSColor.
-	 * @param BrithnessTime The time duration for setting the brightness effect.
-	 * Defaults to 0.0f.
-	 * @param ToggleTime The time interval for toggling the lightbar. Defaults to
-	 * 0.0f.
-	 */
-	void SetLightbar(FDSColor Color, float BrithnessTime, float ToggleTime) override {}
+	void SetLightbar(DSCoreTypes::FDSColor Color) override {}
+	void SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime) override {}
+	void DualSenseSettings(std::uint8_t bIsMic, std::uint8_t bIsHeadset, std::uint8_t bIsSpeaker, std::uint8_t MicVolume, std::uint8_t AudioVolume, std::uint8_t RumbleMode, std::uint8_t RumbleReduce, std::uint8_t TriggerReduce) override {}
+
 	/**
 	 * Sets the LED associated with the player on the Sony gamepad to a specified
 	 * brightness level.

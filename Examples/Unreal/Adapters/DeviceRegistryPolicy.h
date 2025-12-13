@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Misc/CoreDelegates.h"
 
-struct FGamepadRegistryPolicy
+struct FDeviceRegistryPolicy
 {
 public:
 	using EngineIdType = FInputDeviceId;

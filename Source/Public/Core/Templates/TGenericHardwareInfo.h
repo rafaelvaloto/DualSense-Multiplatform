@@ -3,8 +3,8 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "GamepadCore/Source/Public/Core/Interfaces/IPlatformHardwareInfo.h"
-#include "GamepadCore/Source/Public/Core/Types/Structs/Context/DeviceContext.h"
+#include "Core/Interfaces/IPlatformHardwareInfo.h"
+#include "Core/Types/Structs/Context/DeviceContext.h"
 
 namespace GamepadCore
 {

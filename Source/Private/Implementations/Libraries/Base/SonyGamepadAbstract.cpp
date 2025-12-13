@@ -3,8 +3,8 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 
-#include "GamepadCore/Source/Public/Implementations/Libraries/Base/SonyGamepadAbstract.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/IPlatformHardwareInfo.h"
+#include "Implementations/Libraries/Base/SonyGamepadAbstract.h"
+#include "Core/Interfaces/IPlatformHardwareInfo.h"
 
 void SonyGamepadAbstract::ShutdownLibrary()
 {

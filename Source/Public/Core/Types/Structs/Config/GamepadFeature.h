@@ -4,9 +4,7 @@
 // Targets: Windows, Linux, macOS.
 
 #pragma once
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
 
-using namespace DSCoreTypes;
 /**
  * Structure representing the configuration of features for a device.
  * This struct contains various settings related to vibration, rumble, and

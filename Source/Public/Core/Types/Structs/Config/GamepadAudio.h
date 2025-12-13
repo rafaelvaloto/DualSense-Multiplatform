@@ -5,9 +5,6 @@
 
 #pragma once
 
-#include "GamepadCore/Source/Public/Core/Types/DSCoreTypes.h"
-using namespace DSCoreTypes;
-
 /**
  * @class FGamepadAudio
  *

@@ -2,11 +2,11 @@
 // Created for: GamepadCore - Plugin to support DualSense controller on Windows.
 // Planned Release Year: 2025
 #pragma once
-#include "GamepadCore/Source/Public/Core/Interfaces/IDeviceRegistry.h"
-#include "GamepadCore/Source/Public/Core/Interfaces/IPlatformHardwareInfo.h"
-#include "GamepadCore/Source/Public/Core/Types/ECoreGamepad.h"
-#include "GamepadCore/Source/Public/Implementations/Libraries/DualSense/DualSenseLibrary.h"
-#include "GamepadCore/Source/Public/Implementations/Libraries/DualShock/DualShockLibrary.h"
+#include "Core/Interfaces/IDeviceRegistry.h"
+#include "Core/Interfaces/IPlatformHardwareInfo.h"
+#include "Core/Types/ECoreGamepad.h"
+#include "Implementations/Libraries/DualSense/DualSenseLibrary.h"
+#include "Implementations/Libraries/DualShock/DualShockLibrary.h"
 #include <ranges>
 #include <vector>
 

@@ -4,10 +4,10 @@
 // Targets: Windows, Linux, macOS.
 
 #include "Implementations/Utils/GamepadOutput.h"
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
-#include "Core/Types/DSCoreTypes.h"
-#include "Core/Types/ECoreGamepad.h"
-#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Types/DSCoreTypes.h"
+#include "GCore/Types/ECoreGamepad.h"
+#include "GCore/Types/Structs/Context/DeviceContext.h"
 
 const std::uint32_t FGamepadOutput::CRCSeed = 0xeada2d49;
 

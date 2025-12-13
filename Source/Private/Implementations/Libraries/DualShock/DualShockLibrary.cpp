@@ -4,8 +4,8 @@
 // Targets: Windows, Linux, macOS.
 
 #include "Implementations/Libraries/DualShock/DualShockLibrary.h"
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
-#include "Core/Types/ECoreGamepad.h"
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Types/ECoreGamepad.h"
 #include "Implementations/Utils/GamepadInput.h"
 #include "Implementations/Utils/GamepadOutput.h"
 

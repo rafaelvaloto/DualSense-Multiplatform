@@ -3,11 +3,11 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-#include "Core/Interfaces/Segregations/IGamepadAudioHaptics.h"
-#include "Core/Interfaces/Segregations/IGamepadTrigger.h"
-#include "Core/Types/DSCoreTypes.h"
-#include "Core/Types/ECoreGamepad.h"
-#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "GCore/Interfaces/Segregations/IGamepadAudioHaptics.h"
+#include "GCore/Interfaces/Segregations/IGamepadTrigger.h"
+#include "GCore/Types/DSCoreTypes.h"
+#include "GCore/Types/ECoreGamepad.h"
+#include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "Implementations/Libraries/Base/SonyGamepadAbstract.h"
 
 /**

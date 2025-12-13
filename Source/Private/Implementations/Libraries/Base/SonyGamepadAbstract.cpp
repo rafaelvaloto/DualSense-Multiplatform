@@ -4,7 +4,7 @@
 // Targets: Windows, Linux, macOS.
 
 #include "Implementations/Libraries/Base/SonyGamepadAbstract.h"
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
 
 void SonyGamepadAbstract::ShutdownLibrary()
 {

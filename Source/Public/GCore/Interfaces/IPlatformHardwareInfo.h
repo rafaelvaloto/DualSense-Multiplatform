@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include "Core/Types/DSCoreTypes.h"
-#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "../Types/DSCoreTypes.h"
+#include "../Types/Structs/Context/DeviceContext.h"
 
 #define SONY_ (PLATFORM_PS4 || PLATFORM_PS5)
 

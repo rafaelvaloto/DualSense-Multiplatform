@@ -2,9 +2,9 @@
 // Created for: GamepadCore - Plugin to support DualSense controller on Windows.
 // Planned Release Year: 2025
 #pragma once
-#include "Core/Interfaces/IDeviceRegistry.h"
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
-#include "Core/Types/ECoreGamepad.h"
+#include "../GCore/Interfaces/IDeviceRegistry.h"
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Types/ECoreGamepad.h"
 #include "Implementations/Libraries/DualSense/DualSenseLibrary.h"
 #include "Implementations/Libraries/DualShock/DualShockLibrary.h"
 #include <ranges>
@@ -28,7 +28,7 @@ namespace GamepadCore
 		{
 			t.DispatchNewGamepad(std::declval<typename T::EngineIdType>())
 		} -> std::same_as<void>;
-	}
+	};
 
 	template<typename DeviceRegistryPolicy>
 	class TBasicDeviceRegistry : public IDeviceRegistry

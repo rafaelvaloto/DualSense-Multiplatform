@@ -4,10 +4,10 @@
 // Targets: Windows, Linux, macOS.
 
 #include "Implementations/Libraries/DualSense/DualSenseLibrary.h"
-#include "Core/Algorithms/MadgwickAhrs.h"
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
-#include "Core/Types/ECoreGamepad.h"
-#include "Core/Types/Structs/Context/DeviceContext.h"
+#include "GCore/Algorithms/MadgwickAhrs.h"
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Types/ECoreGamepad.h"
+#include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "Implementations/Utils/GamepadInput.h"
 #include "Implementations/Utils/GamepadOutput.h"
 #include "Implementations/Utils/GamepadSensors.h"

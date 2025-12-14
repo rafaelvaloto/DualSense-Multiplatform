@@ -5,7 +5,7 @@
 #pragma once
 #include "../../DSCoreTypes.h"
 #include "../../ECoreGamepad.h"
-#include "../Config/GamepadSensors.h"
+#include "../Config/GamepadCalibration.h"
 #include "InputContext.h"
 #include "OutputContext.h"
 

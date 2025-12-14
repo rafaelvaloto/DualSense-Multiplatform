@@ -2,11 +2,11 @@
 // Created for: WindowsDualsense_ds5w - Plugin to support DualSense controller on Windows.
 // Planned Release Year: 2025
 
-#include "Implementations/Platforms/Windows/WindowsDeviceInfo.h"
-#include "Core/Types/DSCoreTypes.h"
-#include "Core/Types/Structs/Config/GamepadCalibration.h"
-#include "Core/Types/Structs/Context/DeviceContext.h"
-#include "Implementations/Utils/GamepadCalibrationSensors.h"
+#include "Platforms/Windows/WindowsDeviceInfo.h"
+#include "GCore/Types/DSCoreTypes.h"
+#include "GCore/Types/Structs/Config/GamepadCalibration.h"
+#include "GCore/Types/Structs/Context/DeviceContext.h"
+#include "GImplementations/Utils/GamepadSensors.h"
 #include <filesystem>
 #include <hidsdi.h>
 #include <setupapi.h>
@@ -166,9 +166,7 @@ bool FWindowsDeviceInfo::CreateHandle(FDeviceContext* DeviceContext)
 	}
 
 	DeviceContext->Handle = DeviceHandle;
-	if (!ConfigureFeatures(DeviceContext))
-	{
-	}
+	ConfigureFeatures(DeviceContext);
 	return true;
 }
 
@@ -261,10 +259,8 @@ void FWindowsDeviceInfo::ProcessAudioHapitc(FDeviceContext* Context)
 	}
 }
 
-bool FWindowsDeviceInfo::ConfigureFeatures(FDeviceContext* Context)
+void FWindowsDeviceInfo::ConfigureFeatures(FDeviceContext* Context)
 {
-	using namespace FGamepadCalibrationSensors;
-
 	unsigned char FeatureBuffer[41] = {0};
 	std::memset(FeatureBuffer, 0, sizeof(FeatureBuffer));
 
@@ -272,12 +268,12 @@ bool FWindowsDeviceInfo::ConfigureFeatures(FDeviceContext* Context)
 	if (!HidD_GetFeature(Context->Handle, FeatureBuffer, 41))
 	{
 		const unsigned long Error = GetLastError();
-		return false;
+		return;
 	}
 
 	FGamepadCalibration Calibration;
+	using namespace FGamepadSensors;
 	DualSenseCalibrationSensors(FeatureBuffer, Calibration);
 
 	Context->Calibration = Calibration;
-	return true;
 }

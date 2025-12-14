@@ -1,4 +1,4 @@
-<h1 align="center"><i>GamepadCore_</i></h1>
+<h1 align="center">GamepadCore 🕹️</h1>
 
 <p align="center">
 Modern, policy-based C++ library for advanced gamepad features (DualSense/DS4). Engine-agnostic architecture designed for Unreal, Unity, Godot, and O3DE.
@@ -21,168 +21,91 @@ Modern, policy-based C++ library for advanced gamepad features (DualSense/DS4). 
 </div>
 
 ---
+# GamepadCore 🕹️
 
-**GamepadCore** is a low-level, flexible, and modular C++ library designed to provide robust gamepad support, initially focusing on the Sony **DualSense** controller and generic gamepads.
+**GamepadCore** is a high-performance, platform-agnostic C++ library designed to handle raw HID communication with game controllers. It bypasses generic abstraction layers (like XInput or SDL) to unlock hardware-specific features often inaccessible in standard APIs.
 
-The project’s primary goal is to **decouple hardware communication and device registration** from specific game engine logic (such as Unreal Engine or Unity). This separation allows developers to **easily create custom plugins** and integrations for any environment.
+> 🚀 **Battle-Tested & Engine Agnostic:**
+> While currently powering the [Godot-Dualsense](LINK_DO_SEU_REPO_GODOT) GDExtension, this core logic is built to be easily integrated into **Unreal Engine**, **Unity** (via Native Plugin), custom engines, or standalone C++ applications.
 
-### ✨ Key Advantage: Build Your Plugin, Connect Your Engine
+## 🔌 Integrations & Showcase
 
-**GamepadCore** is built on an adapter-based philosophy (`Policy` and `HardwareInfo`) that empowers you to define *how* the library communicates with your specific development environment:
+Since **GamepadCore** is decoupled from game engines, it serves as the backend logic for multiple implementations. See it in action:
 
-* **Hardware Abstraction:** The core utilizes interfaces (`IPlatformHardwareInfo`) that allow concrete, OS-specific implementations (Windows, Linux, macOS, etc.) to be injected at runtime.
-* **Engine Abstraction:** The device registry (`FDeviceRegistry`) uses a **Policy** system to handle device ID allocation and user management. For example, you can map the library to use `FInputDeviceId` in Unreal Engine, or raw `int` handles in a custom engine.
+| Engine | Project                                                                                                | Description |
+| :--- |:-------------------------------------------------------------------------------------------------------| :--- |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg" width="40"/> **Godot** | [**Godot-Dualsense**](LINK_DO_SEU_REPO_GODOT)                                                          | A GDExtension wrapper exposing features to GDScript via Signals. |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" width="40"/> **Unreal** | [**Unreal-Dualsense**](https://github.com/rafaelvaloto/WindowsDualsenseUnreal/tree/v2.0.0-development) | A UE5 Plugin implementation demonstrating how to map raw HID to Unreal's Subsystem and Input mappings. |
 
-**This means you can integrate GamepadCore into *any* game engine or C++ application that requires fine-grained control over input devices.**
+> 💡 **Why this matters:** This proves that the core logic (HID parsing, Haptics, Trigger math) is written once and reused everywhere.
 
+## ✨ Key Features
+This library implements the raw protocol logic to communicate directly with hardware, offering features that standard drivers miss:
 
-## 🚀 Key Features
+* 🏗️ Extensible Multi-Platform Architecture: Flexible design using policy-based templates. Supporting new hardware or platforms is as simple as implementing a connection interface.
 
-* **⚡ Engine Agnostic**
-    * Zero dependencies on specific game engines within the Core logic. The library is built with standard C++ to fit seamlessly into any development environment.
+* 🔌 Dynamic Hot-Swap: Automatically detects controller connection and disconnection events in real-time without stalling the main loop.
 
-* **🧩 Policy-Based Design**
-    * **Registry Policy:** Adapt container types (e.g., `TMap`, `std::map`) and ID types (e.g., `FInputDeviceId`, `int`) to fit your engine's ecosystem.
-    * **Hardware Policy:** Inject platform-specific drivers (Windows HID, Linux udev, macOS IOKit, PS5 SDK) without modifying the core library code.
+* 🎯 Adaptive Triggers: Full native control over resistance, vibration, and "weapon recoil" effects on DualSense L2/R2 triggers.
 
-* **🎮 Advanced Support**
-    * Native, low-level support for **DualSense** specific features including **Adaptive Triggers**, **Haptic Feedback**, **Motion Sensors (Gyro/Accel)**, and **Lightbar Control**.
+* 💡 Lightbar & LED Control: Direct programmatic access to RGB Lightbar, Player LEDs, and Microphone Mute LED.
 
-* **🏎️ Zero-Cost Abstraction**
-    * Heavy use of modern C++ templates ensures that policy resolution happens at **compile-time**, providing maximum performance with no runtime overhead for abstractions.
+* ⚡ Optimized Performance: Zero-allocation loop architecture designed for high-performance scenarios, ideal for multiplayer environments where latency matters.
 
+* ⚙️ Force Feedback: Low-level command generation for standard rumble motors (High/Low frequency).
 
-## 🛠️ Architecture and Structure
+* 🤝 Non-Intrusive: Designed to coexist with existing input managers (like Windows RawInput, UE Enhanced Input, or SDL), preventing device conflict.
+## 🏛️ Architecture Overview
 
-The architecture is streamlined into three main pillars to ensure maintainability and scalability:
+The library follows a strict separation of concerns to ensure portability. By using **Policy-Based Design**, the core logic remains pure C++, while platform-specific details (like how Windows handles USB vs. how Linux handles HID) are injected externally.
 
-1.  **`IPlatformHardwareInfo` (The Driver Layer):**
-    The raw hardware interface. It receives the concrete OS implementation (e.g., `FLinuxHardware`, `FWindowsHardware`) to handle physical I/O.
+### 1. GCore (Abstract Layer)
+The stable heart of the library. It defines generic interfaces (`IGamepad`, `IGamepadTrigger`) and the Device Registry logic. It knows **nothing** about the specific OS or Engine, ensuring the code is completely portable.
 
-2.  **`FDeviceRegistry` (The Manager Layer):**
-    Manages the lifecycle of connected controllers. It uses your defined `Policy` to integrate with the specific Engine's user and input system.
+### 2. Platform Policy (The Bridge)
+This is where the flexibility lies. You provide a "Policy" class that tells the Core *how* to identify and communicate with devices on your specific environment.
+* **Example:** `WindowsHardwarePolicy` uses `setupapi.h`, while a custom `GodotRegistryPolicy` hooks into Godot's internal callbacks.
 
-3.  **`ISonyGamepad` (The Application Layer):**
-    The standardized interfaces your Engine consumes to interact with the gamepad, regardless of the underlying hardware or OS.
+### 3. Implementations (The Drivers)
+Contains the specific HID protocol logic (byte arrays) for the hardware itself.
+* **SonyGamepadAbstract:** Handles logic shared between PS4/PS5.
+* **DualSenseLibrary:** Handles specific DualSense features (Adaptive Triggers, Haptics, Lightbar) by interpreting raw input/output reports.
 
-
-## 🛠️ Usage Example (Concept)
-
-**GamepadCore** is designed to be engine-agnostic. Whether you are using a custom engine, a console application, or a commercial framework, the integration flow follows three simple logical steps:
-
-### 1. Setup & Initialization
-To start using the library, you must first configure the **Hardware Abstraction Layer**. This involves instantiating the specific adapter for your current operating system (Windows, Linux, or macOS) and injecting it into the core system. Once the hardware layer is set, you initialize the **Device Registry**, which acts as the central hub for managing controller lifecycles and mapping them to your application's user system.
-
+## 💻 Integration Example
+1. Basic Setup (C++ Standalone)
+   To use GamepadCore in your project, you instantiate the registry with a specific policy.
+2. Continuous Device Discovery (Game Loop)
+   The registry periodically scans for new devices and updates their connection states.
+   #include "GCore/Templates/TBasicDeviceRegistry.h"
+   #include "Platforms/Windows/WindowsHardwarePolicy.h"
 ```cpp
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
-#include "Implementations/Adapters/DeviceRegistry.h"
-// Include the concrete implementation for your target OS
-#include "Implementations/Platforms/Windows/WindowsHardware.h" 
+// Define a registry using the Windows Policy
+using MyDeviceRegistry = GamepadCore::TBasicDeviceRegistry<WindowsHardwarePolicy>;
 
-void InitializeGamepadSystem()
-{
-    // 1. Create the Platform Hardware Adapter (e.g., Windows, Linux, or Mac)
-    std::unique_ptr<IPlatformHardwareInfo> PlatformInstance = 
-        std::make_unique<FWindowsPlatform::FWindowsHardware>(); 
+int main() {
+auto registry = std::make_unique<MyDeviceRegistry>();
 
-    // 2. Inject the hardware instance into the Core system
-    IPlatformHardwareInfo::SetInstance(std::move(PlatformInstance));
-
-    // 3. Initialize the Device Registry
-    // This establishes the singleton responsible for managing device lifecycles.
-    FDeviceRegistry::Initialize();
-}
-```
-
-### 2. Continuous Device Discovery
-The library relies on a periodic update cycle to handle **Plug-and-Play** events efficiently. In your application's main loop (or a dedicated input thread), you must trigger the discovery process. This ensures that the library detects newly connected gamepads, handles disconnections gracefully, and maintains the registry up-to-date without blocking your main application thread.
-
-```cpp
-// This function should be called every frame or at a fixed interval
-void MyApplication::GameLoop(float DeltaTime)
-{
-    // Scans for new devices, handles timeouts, and updates connection states.
-    FDeviceRegistry::DiscoverDevices(DeltaTime);
-    
-    // ... Your game logic here
-}
-```
-    
-
-### 3. Interacting with the Gamepad
-Once a device is detected and registered, you can retrieve its interface instance using a generic Device ID. This interface (`ISonyGamepad`) gives you direct, low-level access to the controller's features. From here, you can read input data (buttons, analog sticks, sensors) and send output commands (haptics, adaptive triggers, lightbar colors) using a unified API, regardless of the platform running underneath.
-
-```cpp
-#include "Core/Interfaces/ISonyGamepad.h"
-
-void HandlePlayerInput(FInputDeviceId DeviceId)
-{
-    // 1. Retrieve the interface for the specific device ID
-    ISonyGamepad* Gamepad = FDeviceRegistry::GetLibraryInstance(DeviceId);
-
-    if (Gamepad && Gamepad->IsConnected())
-    {
-        // --- INPUT: Reading State ---
-        if (Gamepad->GetButtonState(EGamepadButton::Cross))
-        {
-            Jump();
-        }
-
-        // --- OUTPUT: Sending Haptics & Lights ---
-        // Set Lightbar to Blue
-        Gamepad->SetLightbarColor(0, 0, 255);
+    // Main Loop
+    while (true) {
+        // 1. Detect devices
+        registry->PlugAndPlay(0.016f); // DeltaTime
         
-        // Trigger generic vibration (Left Motor, Right Motor)
-        Gamepad->SetVibration(0.8f, 0.2f);
-
-        // Set Adaptive Trigger (e.g., Weapon Recoil on Right Trigger)
-        Gamepad->SetTriggerEffect(ETriggerLocation::Right, ETriggerEffectType::Weapon, 0, 8, 2);
+        // 2. Access a connected gamepad
+        auto* gamepad = registry->GetLibrary(0); // ID 0
+        
+        if (gamepad) {
+            // Send specific HID command (e.g., Set Lightbar to Red)
+            gamepad->SetLightbarColor(255, 0, 0); 
+            
+            // Trigger Effect: Resistance
+            gamepad->GetIGamepadTrigger()->SetTriggerEffect(
+                TriggerId::Right, 
+                TriggerMode::Resistance, 
+                0, 255
+            );
+        }
     }
 }
-```
-
-### 🚀 Engine Integration & Platform Examples
-
-While the core logic is generic, handling hardware specifics (like HID communication on Windows or Linux) is complex. **Good news: we have already done the heavy lifting.**
-
-You can find complete, production-ready implementations for **Windows, Linux, and macOS** hardware layers in our example folder. Although the example demonstrates integration with **Unreal Engine**, the platform-specific code (`Implementations/Platforms/...`) is **100% reusable** and can be dropped into your own engine with minimal adaptation.
-
-👉 **Explore the Implementation Reference:**
-[https://github.com/rafaelvaloto/GamepadCore_/tree/main/Examples/Unreal](https://github.com/rafaelvaloto/GamepadCore_/tree/main/Examples/Unreal)
-
-```cpp
-// 1.
-// Initialize PlatformHardware, (e.g., FLinuxHardware FWindowsHardware FMacHardware, FSonyHardware)
-std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatform::FLinuxHardware>();
-IPlatformHardwareInfo::SetInstance(std::move(LinuxInstance));
-
-// 2.	
-// Initialize DeviceResgistry
-FDeviceRegistry::Initialize();
-
-// 3.
-// Register a new device
-std::unique_ptr<FDeviceRegistry::FRegistryLogic> FDeviceRegistry::RegistryImplementation = nullptr;
-RegistryImplementation = std::make_unique<FRegistryLogic>();
-
-
-void FDeviceRegistry::DiscoverDevices(float DeltaTime)
-{
-	if (RegistryImplementation)
-	{
-		return RegistryImplementation->PlugAndPlay(DeltaTime);
-	}
-}
-
-ISonyGamepad* FDeviceRegistry::GetLibraryInstance(FInputDeviceId DeviceId)
-{
-	if (RegistryImplementation)
-	{
-		return RegistryImplementation->GetLibrary(DeviceId);
-	}
-	return nullptr;
-}
-
 ```
 
 ## 🧑‍💻 Contributing (Build & sanity checks)

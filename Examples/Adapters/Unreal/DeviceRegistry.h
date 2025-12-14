@@ -7,7 +7,7 @@
 #include "Core/Interfaces/ISonyGamepad.h"
 #include "Core/Templates/TBasicDeviceRegistry.h"
 #include "CoreMinimal.h"
-#include "DeviceRegistryPolicy.h"
+#include "Adapters/DeviceRegistryPolicy.h"
 #include "HAL/PlatformProcess.h"
 
 /**

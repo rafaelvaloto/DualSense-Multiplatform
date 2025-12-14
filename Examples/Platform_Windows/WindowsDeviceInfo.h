@@ -4,16 +4,22 @@
 #pragma once
 
 #ifdef _WIN32
+// O NOMINMAX é crucial para evitar que o windows.h defina macros de min/max
+// que quebrariam o std::min e std::max do C++ padrão.
+#ifndef NOMINMAX
 #define NOMINMAX
-
-#include "Windows/AllowWindowsPlatformTypes.h"
-#include "Windows/HideWindowsPlatformTypes.h"
-#include <Windows.h>
 #endif
 
-#include "Core/Types/DSCoreTypes.h"
-#include "Core/Interfaces/IPlatformHardwareInfo.h"
-#include "Core/Types/Structs/Context/DeviceContext.h"
+#include <windows.h>
+#endif
+
+#include "GCore/Types/DSCoreTypes.h"
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Types/Structs/Context/DeviceContext.h"
+
+#include "GCore/Interfaces/IPlatformHardwareInfo.h"
+#include "GCore/Types/DSCoreTypes.h"
+#include "GCore/Types/Structs/Context/DeviceContext.h"
 
 /**
  * @brief Enumerates the possible outcomes of a polling operation in HID device communication.
@@ -63,7 +69,7 @@ public:
 	 *        should contain a valid device handle and input buffer. If the context is invalid or disconnected,
 	 *        the method will handle associated cleanup and reporting.
 	 */
-	static void Read(FDeviceContext* Context) override;
+	static void Read(FDeviceContext* Context);
 	/**
 	 * @brief Writes data to the specified HID device context.
 	 *
@@ -76,7 +82,7 @@ public:
 	 *        handle, connection type, device type, and output buffer. Must not be null and must
 	 *        represent a valid device handle for a successful write operation.
 	 */
-	static void Write(FDeviceContext* Context) override;
+	static void Write(FDeviceContext* Context);
 	/**
 	 * @brief Detects available HID devices and updates the provided list of device contexts.
 	 *
@@ -87,7 +93,7 @@ public:
 	 * @param Devices A reference to an array of FDeviceContext objects that will be updated to include
 	 *        the detected and initialized HID device contexts. Existing data in the array will be overwritten.
 	 */
-	static void Detect(std::vector<FDeviceContext>& Devices) override;
+	static void Detect(std::vector<FDeviceContext>& Devices);
 	/**
 	 * @brief Creates a handle for the specified device context.
 	 *
@@ -97,7 +103,7 @@ public:
 	 * @param Context A pointer to the device context containing the device path and other relevant information.
 	 * @return True if the handle creation is successful; otherwise, false.
 	 */
-	static bool CreateHandle(FDeviceContext* Context) override;
+	static bool CreateHandle(FDeviceContext* Context);
 	/**
 	 * @brief Invalidates the handle of the specified HID device context and updates its connection status.
 	 *
@@ -108,7 +114,7 @@ public:
 	 * @param Context Pointer to the device context representing the HID device whose handle is to be invalidated.
 	 *        If the provided context is null, the method will return without performing any operations.
 	 */
-	static void InvalidateHandle(FDeviceContext* Context) override;
+	static void InvalidateHandle(FDeviceContext* Context);
 	/**
 	 * @brief Invalidates the specified handle to prevent further use.
 	 *

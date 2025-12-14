@@ -4,7 +4,7 @@
 // Targets: Windows, Linux, macOS.
 #pragma once
 #include "WindowsDeviceInfo.h"
-#include "Core/Templates/TGenericHardwareInfo.h"
+#include "GCore/Templates/TGenericHardwareInfo.h"
 
 namespace FWindowsPlatform
 {

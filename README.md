@@ -25,7 +25,7 @@ Modern, policy-based C++ library for advanced gamepad features (DualSense/DS4). 
 **GamepadCore** is a high-performance, platform-agnostic C++ library designed to handle raw HID communication with game controllers. It bypasses generic abstraction layers (like XInput or SDL) to unlock hardware-specific features often inaccessible in standard APIs.
 
 > 🚀 **Battle-Tested & Engine Agnostic:**
-> While currently powering the [Godot-Dualsense](LINK_DO_SEU_REPO_GODOT) GDExtension, this core logic is built to be easily integrated into **Unreal Engine**, **Unity** (via Native Plugin), custom engines, or standalone C++ applications.
+> While currently powering the [Godot-Dualsense](https://github.com/rafaelvaloto/Godot-Dualsense) GDExtension, this core logic is built to be easily integrated into **Unreal Engine**, **Unity** (via Native Plugin), custom engines, or standalone C++ applications.
 
 ## 🔌 Integrations & Showcase
 
@@ -33,7 +33,7 @@ Since **GamepadCore** is decoupled from game engines, it serves as the backend l
 
 | Engine | Project                                                                                                | Description |
 | :--- |:-------------------------------------------------------------------------------------------------------| :--- |
-| <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg" width="40"/> **Godot** | [**Godot-Dualsense**](LINK_DO_SEU_REPO_GODOT)                                                          | A GDExtension wrapper exposing features to GDScript via Signals. |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg" width="40"/> **Godot** | [**Godot-Dualsense**]([LINK_DO_SEU_REPO_GODOT](https://github.com/rafaelvaloto/Godot-Dualsense))                    | A GDExtension wrapper exposing features to GDScript via Signals. |
 | <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" width="40"/> **Unreal** | [**Unreal-Dualsense**](https://github.com/rafaelvaloto/WindowsDualsenseUnreal/tree/v2.0.0-development) | A UE5 Plugin implementation demonstrating how to map raw HID to Unreal's Subsystem and Input mappings. |
 
 > 💡 **Why this matters:** This proves that the core logic (HID parsing, Haptics, Trigger math) is written once and reused everywhere.

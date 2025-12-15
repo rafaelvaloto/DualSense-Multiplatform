@@ -33,8 +33,8 @@ Since **GamepadCore** is decoupled from game engines, it serves as the backend l
 
 | Engine | Project                                                                                                | Description |
 | :--- |:-------------------------------------------------------------------------------------------------------| :--- |
-| <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg" width="40"/> **Godot** | [**Godot-Dualsense**]([LINK_DO_SEU_REPO_GODOT](https://github.com/rafaelvaloto/Godot-Dualsense))                    | A GDExtension wrapper exposing features to GDScript via Signals. |
-| <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" width="40"/> **Unreal** | [**Unreal-Dualsense**](https://github.com/rafaelvaloto/WindowsDualsenseUnreal/tree/v2.0.0-development) | A UE5 Plugin implementation demonstrating how to map raw HID to Unreal's Subsystem and Input mappings. |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg" width="40"/> **Godot Engine** | [**Godot-Dualsense**](https://github.com/rafaelvaloto/Godot-Dualsense)                                              | A GDExtension wrapper exposing features to GDScript via Signals. |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" width="40"/> **Unreal Engine** | [**Unreal-Dualsense**](https://github.com/rafaelvaloto/WindowsDualsenseUnreal/tree/v2.0.0-development) | A UE5 Plugin implementation demonstrating how to map raw HID to Unreal's Subsystem and Input mappings. |
 
 > 💡 **Why this matters:** This proves that the core logic (HID parsing, Haptics, Trigger math) is written once and reused everywhere.
 

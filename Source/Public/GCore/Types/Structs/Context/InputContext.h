@@ -77,7 +77,6 @@ struct FInputContext
 	std::int32_t TouchId = 0;
 	std::int32_t TouchFingerCount = 0;
 	std::uint8_t DirectionRaw = 0;
-
 	bool bIsTouching = false;
 
 	DSCoreTypes::DSVector2D TouchRadius = {0, 0};

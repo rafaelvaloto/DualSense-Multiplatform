@@ -24,7 +24,7 @@ public:
 	 *
 	 * @return Returns true if the library was successfully initialized.
 	 */
-	bool Initialize(const FDeviceContext& Context) override;
+	virtual bool Initialize(const FDeviceContext& Context) override;
 	/**
 	 * @brief Sends output data to the connected DualShock controller.
 	 *
@@ -39,7 +39,7 @@ public:
 	 * buffering to the appropriate manager, ensuring proper data flow to the
 	 * device.
 	 */
-	void UpdateOutput() override;
+	virtual void UpdateOutput() override;
 
 	/**
 	 * @brief Updates the input state for a DualShock device.
@@ -50,7 +50,7 @@ public:
 	 * specified platform user and input device.
 	 * @return A boolean value indicating whether the input update was successful.
 	 */
-	void UpdateInput(float Delta) override;
+	virtual void UpdateInput(float Delta) override;
 
 	/**
 	 * @brief Configures the lightbar settings of the DualShock controller.
@@ -67,13 +67,13 @@ public:
 	 * @param ToggleTime A float value representing the duration (in seconds) for
 	 * which the lightbar is toggled off during a flash cycle.
 	 */
-	void SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime) override;
+	virtual void SetLightbarFlash(DSCoreTypes::FDSColor Color, float BrithnessTime, float ToggleTime) override;
 	/**
 	 * Stops all currently active operations or actions associated with the
 	 * interface. This method must be implemented by any derived class to handle
 	 * the termination of all ongoing processes.
 	 */
-	void ResetLights() override;
+	virtual void ResetLights() override;
 	/**
 	 * @brief Sets the vibration strength for the DualShock controller.
 	 *
@@ -86,5 +86,5 @@ public:
 	 * @param RightRumble The intensity of the right motor's vibration (0-255).
 	 * Optional, defaults to 0.
 	 */
-	void SetVibration(uint8_t LeftRumble, uint8_t RightRumble) override;
+	virtual void SetVibration(uint8_t LeftRumble, uint8_t RightRumble) override;
 };

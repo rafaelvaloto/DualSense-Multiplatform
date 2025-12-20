@@ -265,7 +265,7 @@ void FDualSenseLibrary::SetPlayerLed(EDSPlayer Led, std::uint8_t Brightness)
 {
 	FOutputContext* HidOutput = &GetMutableDeviceContext()->Output;
 	if ((HidOutput->PlayerLed.Led != static_cast<unsigned char>(Led)) || (HidOutput->PlayerLed.Brightness !=
-																		  static_cast<unsigned char>(Brightness)))
+	                                                                      static_cast<unsigned char>(Brightness)))
 	{
 		HidOutput->PlayerLed.Led = static_cast<unsigned char>(Led);
 		HidOutput->PlayerLed.Brightness = static_cast<unsigned char>(Brightness);

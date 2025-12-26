@@ -138,6 +138,14 @@ void FDualSenseLibrary::UpdateInput(float /*Delta*/)
 		InputToFill->Accelerometer = AccelG;
 	}
 
+	static bool bLastMuteState = false;
+	if (InputToFill->bMute && !bLastMuteState)
+	{
+		Context->Output.Audio.MicStatus = (Context->Output.Audio.MicStatus == 0) ? 1 : 0;
+		UpdateOutput();
+	}
+	bLastMuteState = InputToFill->bMute;
+
 	Context->SwapInputBuffers();
 }
 
@@ -338,8 +346,6 @@ void FDualSenseLibrary::AudioHapticUpdate(std::vector<std::vector<std::int16_t>>
 
 		if (Channels >= 4)
 		{
-			pSampleBuffer[n * Channels + 0] = 0.0f;       // Speaker L
-			pSampleBuffer[n * Channels + 1] = 0.0f;       // Speaker R
 			pSampleBuffer[n * Channels + 2] = LeftFloat;  // Haptic L (Atuador Esquerdo)
 			pSampleBuffer[n * Channels + 3] = RightFloat; // Haptic R (Atuador Direito)
 		}

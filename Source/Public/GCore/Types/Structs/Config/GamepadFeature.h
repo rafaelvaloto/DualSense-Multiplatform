@@ -18,7 +18,7 @@ struct FGamepadFeature
 	 * FeatureMode is used to configure a specific feature mode within the device.
 	 * It is stored as an 8-bit unsigned integer, and its default value is 0xF7.
 	 */
-	std::uint8_t FeatureMode = 0x55;
+	std::uint8_t FeatureMode = 0xF7;
 	/**
 	 * @brief Represents the mode or pattern of vibration for a device.
 	 *

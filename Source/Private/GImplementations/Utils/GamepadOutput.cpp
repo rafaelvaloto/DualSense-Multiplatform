@@ -81,8 +81,7 @@ void FGamepadOutput::OutputDualSense(
 	if (Padding == 2 && HidOut->Feature.FeatureMode == 0b00000111)
 	{
 		Output[0] = HidOut->Feature.VibrationMode;
-		Output[38] = 0x07;
-		Output[41] = 0x02;
+		Output[38] ^= 0x01;
 		if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
 		{
 			const std::int32_t CrcChecksum =
@@ -98,23 +97,22 @@ void FGamepadOutput::OutputDualSense(
 		}
 
 		IPlatformHardwareInfo::Get().Write(DeviceContext);
-		HidOut->Feature.FeatureMode = 0x55;
 		return;
 	}
 
 	Output[0] = HidOut->Feature.VibrationMode;
-	Output[1] = HidOut->Feature.FeatureMode;
+	Output[1] = 0xF7;
 	Output[2] = HidOut->Rumbles.Left;
 	Output[3] = HidOut->Rumbles.Right;
 	Output[4] = HidOut->Audio.HeadsetVolume;
 	Output[5] = HidOut->Audio.SpeakerVolume;
 	Output[6] = HidOut->Audio.MicVolume;
 	Output[7] = HidOut->Audio.Mode;
-	Output[9] = HidOut->Audio.MicStatus;
-	Output[8] = 0x00;
+	Output[9] = HidOut->Audio.MicStatus == 1 ? 0x10 : 0x00;
+	Output[8] = HidOut->Audio.MicStatus == 1 ? 0x01 : 0x00;
 	Output[36] = (HidOut->Feature.TriggerSoftnessLevel << 4) | (HidOut->Feature.SoftRumbleReduce & 0x0F);
-	Output[38] = 0x07;
-	Output[41] = 0x02;
+	Output[38] ^= 0x01;
+	// Output[41] = 0x00;
 	Output[42] = HidOut->PlayerLed.Brightness;
 	Output[43] = HidOut->PlayerLed.Led;
 	Output[44] = HidOut->Lightbar.R;

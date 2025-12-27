@@ -330,19 +330,19 @@ public:
 		InputGameThread = Input;
 	}
 
-	void OuputLocked()
+	void OutputLocked()
 	{
 		std::lock_guard<std::mutex> Lock(OutputMutex);
 		std::memcpy(BufferOutputLock, BufferOutput, sizeof(BufferOutputLock));
 	}
 
-	unsigned char* GetOuputLocked()
+	unsigned char* GetOutputLocked()
 	{
 		std::lock_guard<std::mutex> Lock(OutputMutex);
 		return BufferOutputLock;
 	}
 
-	void OuputAudioLocked()
+	void OutputAudioLocked()
 	{
 		std::lock_guard<std::mutex> Lock(AudioLocked);
 		std::memcpy(BufferAudioLock, BufferAudio, sizeof(BufferAudioLock));

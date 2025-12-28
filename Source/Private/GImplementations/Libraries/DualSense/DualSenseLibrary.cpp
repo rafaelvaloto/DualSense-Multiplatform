@@ -81,11 +81,11 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 	{
 		FOutputContext* EnableReport = &DSContext->Output;
 		// Set flags to enable control over the lightbar, player LEDs
-		EnableReport->Feature.FeatureMode = 0b00000111;
-		EnableReport->Lightbar = {0, 0, 255};
+		EnableReport->Feature.FeatureMode = 0b11110111;
+		EnableReport->Lightbar = {255, 255, 255};
 		EnableReport->PlayerLed.Brightness = 0x00;
+		EnableReport->PlayerLed.Led = static_cast<unsigned char>(EDSPlayer::One);
 		UpdateOutput();
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 		// Audio haptics bluetooth
 		DSContext->BufferAudio[0] = 0x32;
@@ -98,6 +98,8 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 		DSContext->BufferAudio[7] = 15;
 		DSContext->BufferAudio[8] = 50;
 		DSContext->BufferAudio[9] = 50;
+
+		return true;
 	}
 
 	ResetLights();

@@ -121,7 +121,6 @@ void FGamepadOutput::OutputDualSense(
 		    static_cast<unsigned char>((CrcChecksum & 0xFF000000) >> 24UL);
 	}
 
-	DeviceContext->OutputLocked();
 	IPlatformHardwareInfo::Get().Write(DeviceContext);
 }
 
@@ -265,7 +264,6 @@ void FGamepadOutput::SendAudioHapticAdvanced(
 		DeviceContext->BufferAudio[CrcOffset + 3] =
 		    static_cast<unsigned char>((CrcChecksum & 0xFF000000) >> 24UL);
 
-		DeviceContext->OutputAudioLocked();
 		IPlatformHardwareInfo::Get().ProcessAudioHapitc(DeviceContext);
 	}
 }

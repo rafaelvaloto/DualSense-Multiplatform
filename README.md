@@ -128,7 +128,7 @@ graph BT
 using MyHardwareRegistry = GamepadCore::TBasicDeviceRegistry<WindowsHardwarePolicy>;
 
 int main() {
-auto registry = std::make_unique<MyDeviceRegistry>();
+    auto registry = std::make_unique<MyDeviceRegistry>();
 
     // Main Loop
     while (true) {
@@ -151,6 +151,46 @@ auto registry = std::make_unique<MyDeviceRegistry>();
         }
     }
 }
+```
+## 🧪 Integration Tests & Examples
+
+This project includes a complete standalone integration test located in:
+📂 **`GamepadCore/Tests/Integration/`**
+
+This test serves two purposes:
+1. **Validation:** Verifies that the library correctly communicates with hardware (Rumble, LED, Triggers, Inputs).
+2. **Reference:** It is the best code example to learn how to initialize the `DeviceRegistry` and the `HardwarePolicy` in a plain C++ application.
+
+### 🚀 How to Run (Hardware Required)
+> **Note:** A physical DualSense or DualShock 4 controller must be connected via USB or Bluetooth.
+
+**1. Configure & Build**
+Ensure the `BUILD_TESTS` option is enabled (it is ON by default):
+
+### 1. Build the Test Target
+You need to compile the `IntegrationTest` executable.
+
+```bash
+# Configure (if not done yet)
+cmake -S . -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
+
+# Build only the test executable
+cmake --build cmake-build-debug --target IntegrationTest -j
+```
+
+### 2. Run the Test
+Connect your controller.
+
+Run the executable from the build directory:
+
+Windows (PowerShell):
+
+```PowerShell
+.\cmake-build-debug\Tests\Integration\IntegrationTest.exe
+```
+Linux/macOS:
+```Bash
+./cmake-build-debug/Tests/Integration/IntegrationTest
 ```
 
 ## 🧑‍💻 Contributing (Build & sanity checks)

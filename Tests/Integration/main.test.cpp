@@ -13,21 +13,21 @@
 #include "GCore/Templates/TBasicDeviceRegistry.h"
 #include "GCore/Interfaces/IPlatformHardwareInfo.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
+#include "../../Examples/Adapters/Tests/test_device_registry_policy.h"
+using TestDeviceRegistry = GamepadCore::TBasicDeviceRegistry<Ftest_device_registry_policy>;
 
-
-#ifdef _WIN32
+#if _WIN32
     #include "../../Examples/Platform_Windows/test_windows_hardware_policy.h"
     using TestHardwarePolicy = Ftest_windows_platform::Ftest_windows_hardware_policy;
     using TestHardwareInfo   = Ftest_windows_platform::Ftest_windows_hardware;
-#else
+#elif __unix__
     // Linux Fallback
     #include "../../Examples/Platform_Linux/test_linux_hardware_policy.h"
     using TestHardwarePolicy = Ftest_linux_platform::Ftest_linux_hardware_policy;
     using TestHardwareInfo   = Ftest_linux_platform::Ftest_linux_hardware;
 #endif
 
-#include "../../Examples/Adapters/Tests/test_device_registry_policy.h"
-using TestDeviceRegistry = GamepadCore::TBasicDeviceRegistry<Ftest_device_registry_policy>;
+
 
 // Função auxiliar para imprimir o Helper visualmente organizado
 void PrintControlsHelper()

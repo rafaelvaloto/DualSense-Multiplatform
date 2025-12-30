@@ -37,9 +37,9 @@ endif()
 
 
 # 2. Criar o Executável
-# Incluímos o main.cpp E o arquivo de implementação da plataforma (WindowsDeviceInfo.cpp)
+# Incluímos o main.test.cpp E o arquivo de implementação da plataforma (WindowsDeviceInfo.cpp)
 add_executable(IntegrationTest
-        main.cpp
+        main.test.cpp
         ${PLATFORM_SOURCES}
 )
 

@@ -7,7 +7,6 @@
 
 #ifdef _WIN32
 #include <Windows.h>
-#endif
 
 #include "GCore/Types/DSCoreTypes.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
@@ -162,4 +161,6 @@ public:
 		}
 	}
 };
+
+#endif
 #endif

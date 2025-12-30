@@ -19,7 +19,7 @@ file(GLOB_RECURSE GAMEPADCORE_SOURCES CONFIGURE_DEPENDS
 add_library(GamepadCore STATIC
         ${GAMEPADCORE_HEADERS}
         ${GAMEPADCORE_SOURCES}
-        ../Tests/Integration/main.cpp
+        ../Tests/Integration/main.test.cpp
 )
 
 target_include_directories(GamepadCore

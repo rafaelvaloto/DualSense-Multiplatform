@@ -8,6 +8,9 @@
 // MINIAUDIO_IMPLEMENTATION em exatamente UM arquivo .cpp para
 // gerar o código das funções.
 
+#pragma warning(push)
+#pragma warning(disable: 4456) // Shadow variable
+#pragma warning(disable: 4245) // Signed/Unsigned mismatch
+
 #define MINIAUDIO_IMPLEMENTATION
 #include "Libs/miniaudio.h"
-

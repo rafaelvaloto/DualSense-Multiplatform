@@ -117,7 +117,7 @@ Gamepad-Core isn't just a proof-of-concept — it's **production-ready** and pow
 
 ### 🏆 Unreal Engine — Primary Integration
 
-**[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense)** (v2.0.0-pre-release)
+**[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense/tree/v2.0.0-pre-release)** (v2.0.0-pre-release)
 
 The flagship Unreal Engine plugin that brings **every feature** of Gamepad-Core to UE5 through native Blueprint and C++ APIs.
 

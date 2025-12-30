@@ -20,6 +20,7 @@ add_library(GamepadCore STATIC
         ${GAMEPADCORE_HEADERS}
         ${GAMEPADCORE_SOURCES}
         ../Tests/Integration/main.test.cpp
+        Public/GImplementations/Utils/GamepadAudio.h
 )
 
 target_include_directories(GamepadCore

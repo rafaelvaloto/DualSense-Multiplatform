@@ -240,9 +240,13 @@ int main()
             else if (InputState.bTriangle)
             {
                 StatusText = "Triangle";
+                bWasDebugAnalog = !bWasDebugAnalog;
+
                 Gamepad->SetVibration(0, 0);
                 Gamepad->SetLightbar({0, 255, 0}); // Volta para Verde
-                bWasDebugAnalog = !bWasDebugAnalog;
+
+                Trigger->StopTrigger(EDSGamepadHand::Left);
+                Trigger->StopTrigger(EDSGamepadHand::Right);
             }
             else
             {

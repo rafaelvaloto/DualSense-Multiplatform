@@ -23,7 +23,15 @@ if(WIN32)
     )
 
     # Bibliotecas do sistema obrigatórias para HID e SetupAPI
-    list(APPEND PLATFORM_LIBS Setupapi Hid)
+    # + bibliotecas necessárias para miniaudio (backend WASAPI usa COM)
+    list(APPEND PLATFORM_LIBS
+        Setupapi
+        Hid
+        ole32      # COM - usado pelo miniaudio/WASAPI
+        oleaut32   # OLE Automation
+        uuid       # GUIDs para interfaces COM
+        winmm      # Multimedia APIs - necessário para miniaudio
+    )
 
 elseif(UNIX AND NOT APPLE)
     # Configuração Linux (caso vá usar no futuro)
@@ -48,7 +56,8 @@ add_executable(IntegrationTest
 target_include_directories(IntegrationTest PRIVATE
         "${CMAKE_SOURCE_DIR}/Source/Public"
         "${CMAKE_SOURCE_DIR}/Source/Private"
-        "${CMAKE_SOURCE_DIR}/Examples"
+        "${CMAKE_SOURCE_DIR}/Examples/Platform_Linux"
+        "${CMAKE_SOURCE_DIR}/Examples/Platform_Windows"
         "${CMAKE_SOURCE_DIR}"
 )
 

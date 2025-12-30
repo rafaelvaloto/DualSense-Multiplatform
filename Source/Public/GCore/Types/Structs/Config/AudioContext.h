@@ -4,9 +4,9 @@
 // Targets: Windows, Linux, macOS.
 
 #pragma once
-
+#include "../../DSCoreTypes.h"
 /**
- * @class FGamepadAudio
+ * @class FAudioContext
  *
  * @brief Represents the configuration settings for the audio system.
  *
@@ -22,7 +22,7 @@
  * @note Ensure proper initialization of the configuration before using it
  *       with the audio processing pipeline.
  */
-struct FGamepadAudio
+struct FAudioContext
 {
 	/**
 	 * @brief Represents a specific operational state or behavior mode of a system

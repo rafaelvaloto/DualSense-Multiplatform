@@ -311,47 +311,6 @@ void FDualSenseLibrary::AudioHapticUpdate(std::vector<std::vector<std::int16_t>>
 		return;
 	}
 
-	IAudioClient* pAudioClient = Context->AudioContext->AudioClient;
-	IAudioRenderClient* pRenderClient = Context->AudioContext->RenderClient;
-
-	std::uint32_t BufferFrameCount, NumFramesPadding;
-	if (FAILED(pAudioClient->GetBufferSize(&BufferFrameCount)))
-	{
-		return;
-	}
-	if (FAILED(pAudioClient->GetCurrentPadding(&NumFramesPadding)))
-	{
-		return;
-	}
-
-	std::uint32_t NumFramesAvailable = BufferFrameCount - NumFramesPadding;
-	std::uint32_t FramesToWrite = std::min<std::uint32_t>(NumFramesAvailable, static_cast<std::uint32_t>(AudioData.size()));
-
-	if (FramesToWrite == 0)
-	{
-		return;
-	}
-
-	unsigned char* pBuffer;
-	if (FAILED(pRenderClient->GetBuffer(FramesToWrite, &pBuffer)))
-	{
-		return;
-	}
-
-	float* pSampleBuffer = reinterpret_cast<float*>(pBuffer);
-	std::uint32_t Channels = Context->AudioContext->NumChannels;
-
-	for (std::uint32_t n = 0; n < FramesToWrite; n++)
-	{
-		float LeftFloat = static_cast<float>(AudioData[n][0]) / 32768.0f;
-		float RightFloat = static_cast<float>(AudioData[n][1]) / 32768.0f;
-
-		if (Channels >= 4)
-		{
-			pSampleBuffer[n * Channels + 2] = LeftFloat;  // Haptic L (Atuador Esquerdo)
-			pSampleBuffer[n * Channels + 3] = RightFloat; // Haptic R (Atuador Direito)
-		}
-	}
-
-	pRenderClient->ReleaseBuffer(FramesToWrite, 0);
+	// Use the new miniaudio-based WriteHapticData method
+	Context->AudioContext->WriteHapticData(AudioData);
 }

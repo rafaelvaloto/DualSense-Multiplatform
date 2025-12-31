@@ -103,6 +103,11 @@ namespace GamepadCore
 			}
 		}
 
+		void RequestImmediateDetection()
+		{
+			TimeAccumulator = DetectionInterval;
+		}
+
 	private:
 		void CreateLibrary(FDeviceContext& Context)
 		{

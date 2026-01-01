@@ -75,6 +75,11 @@ void FGamepadOutput::OutputDualSense(
 	if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
 	{
 		DeviceContext->BufferOutput[1] = 0x02;
+		HidOut->Feature.FeatureMode = 0b11110111;
+	}
+	else
+	{
+		HidOut->Feature.FeatureMode = 0x57;
 	}
 
 	unsigned char* Output = &DeviceContext->BufferOutput[Padding];
@@ -89,7 +94,7 @@ void FGamepadOutput::OutputDualSense(
 	Output[9] = HidOut->Audio.MicStatus == 1 ? 0x10 : 0x00;
 	Output[8] = HidOut->Audio.MicStatus == 1 ? 0x01 : 0x00;
 	Output[36] = (HidOut->Feature.TriggerSoftnessLevel << 4) | (HidOut->Feature.SoftRumbleReduce & 0x0F);
-	Output[38] ^= 0x01;
+	Output[38] = 0x03;
 	Output[42] = HidOut->PlayerLed.Brightness;
 	Output[43] = HidOut->PlayerLed.Led;
 	Output[44] = HidOut->Lightbar.R;

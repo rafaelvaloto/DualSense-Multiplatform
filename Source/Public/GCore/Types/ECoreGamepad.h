@@ -3,7 +3,7 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
-
+#include "DSCoreTypes.h"
 /**
  * @brief Enum class representing various LED microphone states.
  */

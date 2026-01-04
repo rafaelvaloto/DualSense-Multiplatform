@@ -95,7 +95,7 @@ namespace FGamepadInput
 		    HIDInput[0x08] & DSCoreTypes::InputMasks::Shoulder::R2;
 
 		Input->bHasPhoneConnected = (HIDInput[0x35] & 0x01);
-		Input->BatteryLevel = (((HIDInput[0x34] & 0x0F) / 10.0) * 100);
+		Input->BatteryLevel = static_cast<float>((static_cast<float>(HIDInput[0x34] & 0x0F) / 10.0) * 100);
 
 		auto ApplyDeadZone = [](float Value, float Threshold) -> float {
 			if (std::abs(Value) < Threshold)

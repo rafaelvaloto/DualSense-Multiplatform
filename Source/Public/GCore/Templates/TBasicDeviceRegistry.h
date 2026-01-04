@@ -10,136 +10,119 @@
 #include <ranges>
 #include <vector>
 
-namespace GamepadCore
-{
-	template<typename T>
-	concept DeviceRegistryPolicy = requires(T t, typename T::EngineIdType id) {
-		typename T::EngineIdType;
+namespace GamepadCore {
+    template<typename T>
+    concept DeviceRegistryPolicy = requires(T t, typename T::EngineIdType id)
+    {
+        typename T::EngineIdType;
 
-		{ t.AllocEngineDevice() } -> std::same_as<typename T::EngineIdType>;
+        { t.AllocEngineDevice() } -> std::same_as<typename T::EngineIdType>;
 
-		{ t.DisconnectDevice(id) } -> std::same_as<void>;
+        { t.DisconnectDevice(id) } -> std::same_as<void>;
 
-		{ t.DispatchNewGamepad(id) } -> std::same_as<void>;
-	};
+        { t.DispatchNewGamepad(id) } -> std::same_as<void>;
+    };
 
-	template<typename DeviceRegistryPolicy>
-	class TBasicDeviceRegistry : public IDeviceRegistry
-	{
-		DeviceRegistryPolicy Policy;
-		using EngineIdType = typename DeviceRegistryPolicy::EngineIdType;
-		std::unordered_map<std::string, typename DeviceRegistryPolicy::EngineIdType> KnownDevicePaths;
-		std::unordered_map<std::string, typename DeviceRegistryPolicy::EngineIdType> HistoryDevices;
-		std::unordered_map<typename DeviceRegistryPolicy::EngineIdType, std::shared_ptr<ISonyGamepad>, typename DeviceRegistryPolicy::Hasher> LibraryInstances;
+    template<typename DeviceRegistryPolicy>
+    class TBasicDeviceRegistry : public IDeviceRegistry {
+        using EngineIdType = typename DeviceRegistryPolicy::EngineIdType;
+        std::unordered_map<std::string, typename DeviceRegistryPolicy::EngineIdType> KnownDevicePaths;
+        std::unordered_map<std::string, typename DeviceRegistryPolicy::EngineIdType> HistoryDevices;
+        std::unordered_map<typename DeviceRegistryPolicy::EngineIdType, std::shared_ptr<ISonyGamepad>, typename
+            DeviceRegistryPolicy::Hasher> LibraryInstances;
 
-		float TimeAccumulator = 0.0f;
-		const float DetectionInterval = 2.0f;
+        float TimeAccumulator = 0.0f;
+        const float DetectionInterval = 2.0f;
 
-	public:
-		virtual ~TBasicDeviceRegistry() override = default;
+    public:
+        DeviceRegistryPolicy Policy;
 
-		virtual void PlugAndPlay(float DeltaTime) override
-		{
-			TimeAccumulator += DeltaTime;
-			if (TimeAccumulator < DetectionInterval)
-			{
-				return;
-			}
-			TimeAccumulator = 0.0f;
+        virtual ~TBasicDeviceRegistry() override = default;
 
-			std::unordered_set<std::string> OrphanPaths;
-			OrphanPaths.clear();
-			for (const auto& [Path, Key] : KnownDevicePaths)
-			{
-				OrphanPaths.insert(Path);
-			}
+        virtual void PlugAndPlay(float DeltaTime) override {
+            TimeAccumulator += DeltaTime;
+            if (TimeAccumulator < DetectionInterval) {
+                return;
+            }
+            TimeAccumulator = 0.0f;
 
-			std::vector<FDeviceContext> DetectedDevices;
-			DetectedDevices.clear();
-			IPlatformHardwareInfo::Get().Detect(DetectedDevices);
+            std::unordered_set<std::string> OrphanPaths;
+            OrphanPaths.clear();
+            for (const auto &[Path, Key]: KnownDevicePaths) {
+                OrphanPaths.insert(Path);
+            }
 
-			for (const auto& Context : DetectedDevices)
-			{
-				OrphanPaths.erase(Context.Path);
-			}
+            std::vector<FDeviceContext> DetectedDevices;
+            DetectedDevices.clear();
+            IPlatformHardwareInfo::Get().Detect(DetectedDevices);
 
-			for (const std::string& Path : OrphanPaths)
-			{
-				auto It = KnownDevicePaths.find(Path);
-				if (It != KnownDevicePaths.end())
-				{
-					EngineIdType DeviceId = It->second;
-					RemoveLibraryInstance(DeviceId);
-					KnownDevicePaths.erase(It);
-				}
-			}
+            for (const auto &Context: DetectedDevices) {
+                OrphanPaths.erase(Context.Path);
+            }
 
-			for (auto Context : DetectedDevices)
-			{
-				Context.Output = FOutputContext();
-				if (bool IsCreateHandle = IPlatformHardwareInfo::Get().CreateHandle(&Context))
-				{
-					CreateLibrary(Context);
-				}
-			}
-		}
+            for (const std::string &Path: OrphanPaths) {
+                auto It = KnownDevicePaths.find(Path);
+                if (It != KnownDevicePaths.end()) {
+                    EngineIdType DeviceId = It->second;
+                    RemoveLibraryInstance(DeviceId);
+                    KnownDevicePaths.erase(It);
+                }
+            }
 
-		ISonyGamepad* GetLibrary(EngineIdType DeviceId)
-		{
-			if (LibraryInstances.contains(DeviceId))
-			{
-				return LibraryInstances[DeviceId].get();
-			}
-			return nullptr;
-		}
+            for (auto Context: DetectedDevices) {
+                Context.Output = FOutputContext();
+                if (bool IsCreateHandle = IPlatformHardwareInfo::Get().CreateHandle(&Context)) {
+                    CreateLibrary(Context);
+                }
+            }
+        }
 
-		void RemoveLibraryInstance(EngineIdType DeviceId)
-		{
-			Policy.DisconnectDevice(DeviceId);
-			if (LibraryInstances.contains(DeviceId))
-			{
-				LibraryInstances[DeviceId]->ShutdownLibrary();
-				LibraryInstances.erase(DeviceId);
-			}
-		}
+        ISonyGamepad *GetLibrary(EngineIdType DeviceId) {
+            if (LibraryInstances.contains(DeviceId)) {
+                return LibraryInstances[DeviceId].get();
+            }
+            return nullptr;
+        }
 
-		void RequestImmediateDetection()
-		{
-			TimeAccumulator = DetectionInterval;
-		}
+        void RemoveLibraryInstance(EngineIdType DeviceId) {
+            Policy.DisconnectDevice(DeviceId);
+            if (LibraryInstances.contains(DeviceId)) {
+                LibraryInstances[DeviceId]->ShutdownLibrary();
+                LibraryInstances.erase(DeviceId);
+            }
+        }
 
-	private:
-		void CreateLibrary(FDeviceContext& Context)
-		{
-			std::shared_ptr<ISonyGamepad> Gamepad = nullptr;
-			if (Context.DeviceType == EDSDeviceType::DualSense || Context.DeviceType == EDSDeviceType::DualSenseEdge)
-			{
-				Gamepad = std::make_shared<FDualSenseLibrary>();
-			}
+        void RequestImmediateDetection() {
+            TimeAccumulator = DetectionInterval;
+        }
 
-			if (Context.DeviceType == EDSDeviceType::DualShock4)
-			{
-				Gamepad = std::make_shared<FDualShockLibrary>();
-			}
 
-			if (!Gamepad)
-			{
-				return;
-			}
+    private:
+        void CreateLibrary(FDeviceContext &Context) {
+            std::shared_ptr<ISonyGamepad> Gamepad = nullptr;
+            if (Context.DeviceType == EDSDeviceType::DualSense || Context.DeviceType == EDSDeviceType::DualSenseEdge) {
+                Gamepad = std::make_shared<FDualSenseLibrary>();
+            }
 
-			if (!HistoryDevices.contains(Context.Path))
-			{
-				HistoryDevices[Context.Path] = Policy.AllocEngineDevice();
-			}
+            if (Context.DeviceType == EDSDeviceType::DualShock4) {
+                Gamepad = std::make_shared<FDualShockLibrary>();
+            }
 
-			auto DeviceId = HistoryDevices[Context.Path];
-			if (!LibraryInstances.contains(DeviceId))
-			{
-				Gamepad->Initialize(Context);
-				LibraryInstances[DeviceId] = Gamepad;
-				KnownDevicePaths[Context.Path] = DeviceId;
-				Policy.DispatchNewGamepad(DeviceId);
-			}
-		}
-	};
+            if (!Gamepad) {
+                return;
+            }
+
+            if (!HistoryDevices.contains(Context.Path)) {
+                HistoryDevices[Context.Path] = Policy.AllocEngineDevice();
+            }
+
+            auto DeviceId = HistoryDevices[Context.Path];
+            if (!LibraryInstances.contains(DeviceId)) {
+                Gamepad->Initialize(Context);
+                LibraryInstances[DeviceId] = Gamepad;
+                KnownDevicePaths[Context.Path] = DeviceId;
+                Policy.DispatchNewGamepad(DeviceId);
+            }
+        }
+    };
 } // namespace GamepadCore

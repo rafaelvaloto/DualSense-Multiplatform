@@ -191,10 +191,10 @@ cd Gamepad-Core
 
 # 2. Configure and build
 cmake -S . -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
-cmake --build cmake-build-release --target IntegrationTest -j
+cmake --build cmake-build-release --target tests-adaptive-triggers -j
 
 # 3. Run (make sure your DualSense/DualShock is connected)
-./cmake-build-release/Tests/Integration/IntegrationTest
+./cmake-build-release/Tests/Integration/tests-adaptive-triggers
 ```
 
 ### 🎮 Test Controls
@@ -227,12 +227,12 @@ Once the console application is running, use your DualSense to test the features
 // 1. Choose your platform policy
 #ifdef _WIN32
     #include "Examples/Platform_Windows/test_windows_hardware_policy.h"
-    using HardwarePolicy = FWindowsPlatform::FWindowsHardwarePolicy;
-    using HardwareInfo = FWindowsPlatform::FWindowsHardware;
-#elif __linux__
-    #include "Examples/Platform_Linux/LinuxHardwarePolicy.h"
-    using HardwarePolicy = FLinuxPlatform::FLinuxHardwarePolicy;
-    using HardwareInfo = FLinuxPlatform::FLinuxHardware;
+    using HardwarePolicy = Ftest_windows_platform::Ftest_windows_hardware_policy;
+    using HardwareInfo = Ftest_windows_platform::Ftest_windows_hardware;
+#elif __unix__
+    #include "Examples/Platform_Linux/test_linux_hardware_policy.h"
+    using HardwarePolicy = Ftest_linux_platform::Ftest_linux_hardware_policy;
+    using HardwareInfo = Ftest_linux_platform::Ftest_linux_hardware;
 #endif
 
 // 2. Define your registry policy
@@ -313,34 +313,34 @@ Gamepad-Core uses **policies** to abstract OS-specific code:
 
 ```cpp
 struct MyCustomHardwarePolicy {
-        void Read(FDeviceContext* Context)
+      		void Read(FDeviceContext* Context)
 		{
-			Ftest_windows_device_info::Read(Context);
+			Ftest_windows_platform::Ftest_windows_device_info::Read(Context);
 		}
 
 		void Write(FDeviceContext* Context)
 		{
-			Ftest_windows_device_info::Write(Context);
+			Ftest_windows_platform::Ftest_windows_device_info::Write(Context);
 		}
 
 		void Detect(std::vector<FDeviceContext>& Devices)
 		{
-			Ftest_windows_device_info::Detect(Devices);
+			Ftest_windows_platform::Ftest_windows_device_info::Detect(Devices);
 		}
 
 		bool CreateHandle(FDeviceContext* Context)
 		{
-			return Ftest_windows_device_info::CreateHandle(Context);
+			return Ftest_windows_platform::Ftest_windows_device_info::CreateHandle(Context);
 		}
 
 		void InvalidateHandle(FDeviceContext* Context)
 		{
-			Ftest_windows_device_info::InvalidateHandle(Context);
+			Ftest_windows_platform::Ftest_windows_device_info::InvalidateHandle(Context);
 		}
 
 		void ProcessAudioHaptic(FDeviceContext* Context)
 		{
-			Ftest_windows_device_info::ProcessAudioHapitc(Context);
+			Ftest_windows_platform::Ftest_windows_device_info::ProcessAudioHaptic(Context);
 		}
 
 		void InitializeAudioDevice (FDeviceContext* Context)
@@ -419,14 +419,13 @@ Gamepad-Core provides a **complete audio-to-haptics and audio-to-speaker pipelin
 
 ## 🎧 Audio Haptics Integration Test
 
-The `AudioHapticsTest` is an integration test that demonstrates the Audio Haptics feature. It plays a WAV file on your speakers while simultaneously sending haptic feedback to your DualSense controller.
+The `tests-audio-haptics` is an integration test that demonstrates the Audio Haptics feature. It plays a WAV file on your speakers while simultaneously sending haptic feedback to your DualSense controller.
 
 ### Running the Test
 
 ```bash
 # From the project root
-cd Tests/Integration
-../../cmake-build-release/Tests/Integration/AudioHapticsTest.exe "Mock/ES_Touch_SCENE.wav"
+./cmake-build-release/Tests/Integration/tests-audio-haptics "Tests/Integration/Datasets/ES_Touch_SCENE.wav"
 ```
 
 **Requirements:**
@@ -498,8 +497,8 @@ cmake -S . -B build/release -DCMAKE_BUILD_TYPE=Release
 cmake --build build/release --target GamepadCore -j
 
 # Run integration tests (hardware required)
-cmake --build build/debug --target IntegrationTest -j
-./build/debug/Tests/Integration/IntegrationTest
+cmake --build build/debug --target tests-adaptive-triggers -j
+./build/debug/Tests/Integration/tests-adaptive-triggers
 ```
 
 ### Format Code (Contributors)

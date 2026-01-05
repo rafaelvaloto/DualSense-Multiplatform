@@ -8,7 +8,7 @@
 #include <thread>
 
 // Headers do Core
-#include "../../Examples/Adapters/Tests/test_device_registry_policy.h"
+#include "../../../Examples/Adapters/Tests/test_device_registry_policy.h"
 #include "GCore/Interfaces/IPlatformHardwareInfo.h"
 #include "GCore/Templates/TBasicDeviceRegistry.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
@@ -16,12 +16,12 @@
 using TestDeviceRegistry = GamepadCore::TBasicDeviceRegistry<Ftest_device_registry_policy>;
 
 #if _WIN32
-#include "../../Examples/Platform_Windows/test_windows_hardware_policy.h"
+#include "../../../Examples/Platform_Windows/test_windows_hardware_policy.h"
 using TestHardwarePolicy = Ftest_windows_platform::Ftest_windows_hardware_policy;
 using TestHardwareInfo = Ftest_windows_platform::Ftest_windows_hardware;
 #elif __unix__
 // Linux Fallback
-#include "../../Examples/Platform_Linux/test_linux_hardware_policy.h"
+#include "../../../Examples/Platform_Linux/test_linux_hardware_policy.h"
 using TestHardwarePolicy = Ftest_linux_platform::Ftest_linux_hardware_policy;
 using TestHardwareInfo = Ftest_linux_platform::Ftest_linux_hardware;
 #endif

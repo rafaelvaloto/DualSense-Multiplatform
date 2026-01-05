@@ -1,4 +1,4 @@
-
+---
 Language:                                       Cpp
 BasedOnStyle:                                   LLVM
 IndentWidth:                                    4
@@ -18,7 +18,7 @@ RemoveSemicolon: true
 InsertBraces: true
 InsertNewlineAtEOF: true
 
-# We have to to set BeforeLambdaBody = false, because in other case it makes incorrect indention
+# We have to set BeforeLambdaBody = false, because in another case it makes incorrect indention
 BreakBeforeBraces:                              Custom
 
 BraceWrapping:

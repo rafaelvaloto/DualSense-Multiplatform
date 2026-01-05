@@ -94,9 +94,12 @@ void FGamepadOutput::OutputDualSense(
 	Output[9] = HidOut->Audio.MicStatus == 1 ? 0x10 : 0x00;
 	Output[8] = HidOut->Audio.MicStatus == 1 ? 0x01 : 0x00;
 	Output[36] = (HidOut->Feature.TriggerSoftnessLevel << 4) | (HidOut->Feature.SoftRumbleReduce & 0x0F);
-	if (Padding == 2) {
+	if (Padding == 2)
+	{
 		Output[38] ^= 0x01;
-	} else {
+	}
+	else
+	{
 		Output[38] = 0x03;
 	}
 

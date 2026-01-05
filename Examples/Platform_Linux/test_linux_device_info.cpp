@@ -5,8 +5,9 @@
 #ifdef BUILD_GAMEPAD_CORE_TESTS
 #ifdef __unix__
 #include "GCore/Types/ECoreGamepad.h"
-#include "GCore/Types/Structs/Config/GamepadSensors.h"
+#include "GCore/Types/Structs/Config/GamepadCalibration.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
+#include "GImplementations/Utils/GamepadSensors.h"
 #include "SDL_hidapi.h"
 #include <cstring>
 #include <string>
@@ -18,7 +19,7 @@ static const std::uint16_t DUALSHOCK4_PID_V2 = 0x09CC;
 static const std::uint16_t DUALSENSE_PID = 0x0CE6;
 static const std::uint16_t DUALSENSE_EDGE_PID = 0x0DF2;
 
-void FCommonsDeviceInfo::Read(FDeviceContext* Context)
+void Ftest_linux_device_info::Read(FDeviceContext* Context)
 {
 	if (!Context || !Context->Handle)
 	{
@@ -53,7 +54,7 @@ void FCommonsDeviceInfo::Read(FDeviceContext* Context)
 	}
 }
 
-void FCommonsDeviceInfo::ProcessAudioHapitc(FDeviceContext* Context)
+void Ftest_linux_device_info::ProcessAudioHapitc(FDeviceContext* Context)
 {
 	if (!Context || !Context->Handle)
 	{
@@ -69,7 +70,7 @@ void FCommonsDeviceInfo::ProcessAudioHapitc(FDeviceContext* Context)
 	}
 }
 
-bool FCommonsDeviceInfo::ConfigureFeatures(FDeviceContext* Context)
+bool Ftest_linux_device_info::ConfigureFeatures(FDeviceContext* Context)
 {
 	SDL_hid_device* DeviceHandle = static_cast<SDL_hid_device*>(Context->Handle);
 
@@ -90,7 +91,7 @@ bool FCommonsDeviceInfo::ConfigureFeatures(FDeviceContext* Context)
 	return true;
 }
 
-void FCommonsDeviceInfo::Write(FDeviceContext* Context)
+void Ftest_linux_device_info::Write(FDeviceContext* Context)
 {
 	if (!Context || !Context->Handle)
 	{
@@ -109,7 +110,7 @@ void FCommonsDeviceInfo::Write(FDeviceContext* Context)
 	}
 }
 
-void FCommonsDeviceInfo::Detect(std::vector<FDeviceContext>& Devices)
+void Ftest_linux_device_info::Detect(std::vector<FDeviceContext>& Devices)
 {
 	Devices.clear();
 
@@ -163,7 +164,7 @@ void FCommonsDeviceInfo::Detect(std::vector<FDeviceContext>& Devices)
 	SDL_hid_free_enumeration(Devs);
 }
 
-bool FCommonsDeviceInfo::CreateHandle(FDeviceContext* Context)
+bool Ftest_linux_device_info::CreateHandle(FDeviceContext* Context)
 {
 	if (!Context)
 	{
@@ -185,7 +186,7 @@ bool FCommonsDeviceInfo::CreateHandle(FDeviceContext* Context)
 	return true;
 }
 
-void FCommonsDeviceInfo::InvalidateHandle(FDeviceContext* Context)
+void Ftest_linux_device_info::InvalidateHandle(FDeviceContext* Context)
 {
 	if (Context)
 	{

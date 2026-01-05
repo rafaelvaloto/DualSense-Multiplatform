@@ -1,3 +1,14 @@
-﻿Source/Public/Libs/miniaudio.h
-Source/Private/GamepadCore/Source/Public/Libs/miniaudio.h
-Source/Private/GImplementations/Utils/MiniAudio/miniaudio_impl.cpp
+﻿# ... existing code ...
+# External Libraries
+miniaudio.h
+miniaudio_impl.cpp
+Libs/
+
+# Binary data and Datasets
+*.wav
+*.bin
+Datasets/
+
+# Build directories
+cmake-build-debug/
+cmake-build-release/

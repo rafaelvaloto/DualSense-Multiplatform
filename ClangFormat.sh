@@ -6,9 +6,15 @@ IFS=$'\n\t'
 
 PROJECT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-NC='\033[0m' # No Color
+# Colors for output
+# shellcheck disable=SC2034
 RED='\033[0;31m'
-YELLOW='\033[0;33m'
+# shellcheck disable=SC2034
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+# shellcheck disable=SC2034
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
 function win_setup() {
 	local vswhere
@@ -42,4 +48,28 @@ esac
 # Print clang-format version so it is visible in CI logs and such
 clang-format --version
 
-find "${PROJECT_DIR}" \( -name "*.h" -o -name "*.cpp" \) -not -path "*Libs*" -print0 | xargs -0 -P "$(nproc)" -n 100 clang-format -i
+# Build find arguments array
+FIND_ARGS=("${PROJECT_DIR}" \( -name "*.h" -o -name "*.cpp" \))
+
+if [ -f "${PROJECT_DIR}/.clang-format-ignore" ]; then
+    # We use a subshell or a different variable to avoid IFS issues during array build
+    while read -r line || [ -n "$line" ]; do
+        clean_line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr -d '\r')
+        [[ "$clean_line" =~ ^#.*$ ]] && continue
+        [[ -z "$clean_line" ]] && continue
+
+        FIND_ARGS+=(-not -path "*/${clean_line}*")
+    done < "${PROJECT_DIR}/.clang-format-ignore"
+fi
+
+# Standard excludes
+FIND_ARGS+=(-not -path "*Libs*")
+FIND_ARGS+=(-not -path "*cmake-build*")
+
+# Reset IFS to default to ensure array expansion works correctly for the find command
+OLD_IFS="$IFS"
+unset IFS
+
+find "${FIND_ARGS[@]}" -print0 | xargs -0 -P "$(nproc)" -n 100 clang-format -i
+
+IFS="$OLD_IFS"

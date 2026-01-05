@@ -19,7 +19,7 @@ file(GLOB_RECURSE GAMEPADCORE_SOURCES CONFIGURE_DEPENDS
 add_library(GamepadCore STATIC
         ${GAMEPADCORE_HEADERS}
         ${GAMEPADCORE_SOURCES}
-        ../Tests/Integration/main.test.cpp
+        ../Tests/Integration/Features/adaptive-triggers.test.cpp
         Public/GImplementations/Utils/GamepadAudio.h
 )
 
@@ -37,19 +37,19 @@ set_target_properties(GamepadCore PROPERTIES
         POSITION_INDEPENDENT_CODE ON
 )
 
-# ---- clang-format helpers (optional) ----
 find_program(CLANG_FORMAT_EXE NAMES clang-format)
 
 if (CLANG_FORMAT_EXE)
+    # Get the root directory of the project (where ClangFormat.sh is)
+    set(GAMEPAD_CORE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/..")
+
     add_custom_target(GamepadCoreFormat
-            COMMAND "${CLANG_FORMAT_EXE}" -i
-            ${GAMEPADCORE_HEADERS}
-            ${GAMEPADCORE_SOURCES}
-            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-            COMMENT "Running clang-format on GamepadCore sources"
+            COMMAND bash "${GAMEPAD_CORE_ROOT}/ClangFormat.sh"
+            WORKING_DIRECTORY "${GAMEPAD_CORE_ROOT}"
+            COMMENT "Running script-based clang-format (respecting ignores)"
             VERBATIM
     )
 
-    # If you REALLY want auto-format before each build, uncomment this:
+    # If you want auto-format before each build, keep this:
     add_dependencies(GamepadCore GamepadCoreFormat)
 endif()

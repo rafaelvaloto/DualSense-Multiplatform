@@ -86,17 +86,7 @@ void FGamepadOutput::OutputDualSense(FDeviceContext* DeviceContext)
 		Output[9] = HidOut->Audio.MicStatus == 1 ? 0x10 : 0x00;
 		Output[8] = HidOut->Audio.MicStatus == 1 ? 0x01 : 0x00;
 		Output[36] = (HidOut->Feature.TriggerSoftnessLevel << 4) | (HidOut->Feature.SoftRumbleReduce & 0x0F);
-
-		if (DeviceContext->ConnectionType == EDSDeviceConnection::Usb)
-		{
-			Output[38] = 0x03;
-		}
-		else
-		{
-			Output[38] = 0x00;
-			Output[38] ^= 0x01;
-		}
-
+		Output[38] = 0x07;
 		Output[42] = HidOut->PlayerLed.Brightness;
 		Output[43] = HidOut->PlayerLed.Led;
 		Output[44] = HidOut->Lightbar.R;

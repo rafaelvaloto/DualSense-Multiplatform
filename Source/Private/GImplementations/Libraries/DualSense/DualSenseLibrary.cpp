@@ -81,14 +81,15 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 	if (DSContext->ConnectionType == EDSDeviceConnection::Bluetooth)
 	{
 		{
-			std::lock_guard<std::mutex> LockGuard(DSContext->OutputMutex);
+			std::lock_guard LockGuard(DSContext->OutputMutex);
 			unsigned char* MutableBuffer = DSContext->GetRawOutputBuffer();
 			size_t Padding = 2;
 			MutableBuffer[0] = 0x31;
 			MutableBuffer[1] = 0x02;
 
 			unsigned char* Output = &MutableBuffer[Padding];
-			Output[1] = 0b11111111;
+			Output[0] = 0xFF;
+			Output[1] = 0x53;
 			Output[38] = 0x00;
 			Output[44] = 0x00;
 			Output[45] = 0x00;
@@ -105,6 +106,8 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 			IPlatformHardwareInfo::Get().Write(DSContext);
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		}
+		DSContext->Output.Feature.VibrationMode = 0xFF;
+		DSContext->Output.Feature.FeatureMode = 0xF7;
 		ResetLights();
 
 		// Audio haptics bluetooth

@@ -12,27 +12,27 @@
 
 void FGamepadOutput::OutputDualShock(FDeviceContext* DeviceContext)
 {
+	const FOutputContext* HidOut = &DeviceContext->Output;
+	size_t Padding = 1;
+	unsigned char* MutableBuffer = DeviceContext->GetRawOutputBuffer();
+	MutableBuffer[0] = 0x11;
+	if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
+	{
+		Padding = 2;
+		MutableBuffer[0] = 0x05;
+		MutableBuffer[1] = 0xc0;
+	}
+
+	unsigned char* Output = &MutableBuffer[Padding];
+	Output[0] = 0xff;
+	if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
+	{
+		Output[0] = 0x20;
+		Output[1] = 0x07;
+	}
+
 	{
 		std::lock_guard<std::mutex> LockGuard(DeviceContext->OutputMutex);
-		const FOutputContext* HidOut = &DeviceContext->Output;
-		size_t Padding = 1;
-		unsigned char* MutableBuffer = DeviceContext->GetRawOutputBuffer();
-		MutableBuffer[0] = 0x11;
-		if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
-		{
-			Padding = 2;
-			MutableBuffer[0] = 0x05;
-			MutableBuffer[1] = 0xc0;
-		}
-
-		unsigned char* Output = &MutableBuffer[Padding];
-		Output[0] = 0xff;
-		if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
-		{
-			Output[0] = 0x20;
-			Output[1] = 0x07;
-		}
-
 		Output[3 + (Padding - 1)] = HidOut->Rumbles.Left;
 		Output[4 + (Padding - 1)] = HidOut->Rumbles.Right;
 		Output[5 + (Padding - 1)] = HidOut->Lightbar.R;
@@ -49,31 +49,30 @@ void FGamepadOutput::OutputDualShock(FDeviceContext* DeviceContext)
 			MutableBuffer[0x4C] = static_cast<unsigned char>((CrcChecksum & 0x00FF0000) >> 16UL);
 			MutableBuffer[0x4D] = static_cast<unsigned char>((CrcChecksum & 0xFF000000) >> 24UL);
 		}
+		IPlatformHardwareInfo::Get().Write(DeviceContext);
 	}
-
-	IPlatformHardwareInfo::Get().Write(DeviceContext);
 }
 
 void FGamepadOutput::OutputDualSense(FDeviceContext* DeviceContext)
 {
+	FOutputContext* HidOut = &DeviceContext->Output;
+	size_t Padding = 1;
+	unsigned char* MutableBuffer = DeviceContext->GetRawOutputBuffer();
+	MutableBuffer[0] = 0x02;
+	if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
 	{
-		std::lock_guard<std::mutex> LockGuard(DeviceContext->OutputMutex);
+		Padding = 2;
+		MutableBuffer[0] = 0x31;
+		MutableBuffer[1] = 0x02;
+		HidOut->Feature.FeatureMode = 0xF7;
+	}
+	else
+	{
+		HidOut->Feature.FeatureMode = 0x57;
+	}
 
-		FOutputContext* HidOut = &DeviceContext->Output;
-		size_t Padding = 1;
-		unsigned char* MutableBuffer = DeviceContext->GetRawOutputBuffer();
-		MutableBuffer[0] = 0x02;
-		if (DeviceContext->ConnectionType == EDSDeviceConnection::Bluetooth)
-		{
-			Padding = 2;
-			MutableBuffer[0] = 0x31;
-			MutableBuffer[1] = 0x02;
-			HidOut->Feature.FeatureMode = 0xF7;
-		}
-		else
-		{
-			HidOut->Feature.FeatureMode = 0x57;
-		}
+	{
+		std::lock_guard LockGuard(DeviceContext->OutputMutex);
 
 		unsigned char* Output = &MutableBuffer[Padding];
 		Output[0] = HidOut->Feature.VibrationMode;
@@ -123,9 +122,9 @@ void FGamepadOutput::OutputDualSense(FDeviceContext* DeviceContext)
 			MutableBuffer[0x4C] = static_cast<unsigned char>((CrcChecksum & 0x00FF0000) >> 16UL);
 			MutableBuffer[0x4D] = static_cast<unsigned char>((CrcChecksum & 0xFF000000) >> 24UL);
 		}
-	}
 
-	IPlatformHardwareInfo::Get().Write(DeviceContext);
+		IPlatformHardwareInfo::Get().Write(DeviceContext);
+	}
 }
 
 void FGamepadOutput::SetTriggerEffects(unsigned char* Trigger, FGamepadTriggersHaptic& Effect)

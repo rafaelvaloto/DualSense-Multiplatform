@@ -2,3 +2,12 @@
 /cmake-build-debug
 /cmake-build-release
 /build
+/App
+/.vscode
+*.log
+*.user
+*.swp
+*.swo
+.DS_Store
+*.exe
+*.dll

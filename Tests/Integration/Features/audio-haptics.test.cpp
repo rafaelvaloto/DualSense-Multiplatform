@@ -384,8 +384,14 @@ int main(int argc, char* argv[])
 
 	if (argc < 2)
 	{
+#ifdef AUTOMATED_TESTS
+		WavFilePath = std::string(GAMEPAD_CORE_PROJECT_ROOT) + "/Tests/Integration/Datasets/ES_Touch_SCENE.wav";
+		bUseSystemAudio = false;
+		std::cout << "[Test] Automated mode: Forcing audio file: " << WavFilePath << std::endl;
+#else
 		bUseSystemAudio = true;
 		std::cout << "[System] No WAV file provided. Using System Audio Loopback." << std::endl;
+#endif
 	}
 	else
 	{

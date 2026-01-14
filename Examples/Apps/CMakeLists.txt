@@ -12,11 +12,11 @@ if(WIN32 AND USE_VIGEM)
     set(MOD_SOURCES
             DualSenseMods.cpp
             ../Platform_Windows/test_windows_device_info.cpp
+            ../Platform_Windows/ViGEmAdapter/ViGEmAdapter.cpp
     )
 
     # Adiciona o subdiretório do ViGEmClient para compilar junto
     add_subdirectory(../Examples/Platform_Windows/ViGEmAdapter/ViGEmClient-master ViGEmClient)
-    list(APPEND MOD_SOURCES ../Platform_Windows/ViGEmAdapter/ViGEmAdapter.cpp)
 
     add_library(GamepadModCore SHARED ${MOD_SOURCES})
 

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/tests-audio-haptics.dir/link.d "CMakeFiles/tests-audio-haptics.dir/Features/audio-haptics.test.cpp.o" "CMakeFiles/tests-audio-haptics.dir/__/__/Examples/Platform_Linux/test_linux_device_info.cpp.o" -o tests-audio-haptics  ../../Source/libGamepadCore.a /usr/lib/x86_64-linux-gnu/libSDL2.so

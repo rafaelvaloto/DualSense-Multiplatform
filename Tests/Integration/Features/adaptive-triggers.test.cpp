@@ -67,11 +67,24 @@ int main()
 	bool bWasConnected = false;
 	const int32_t TargetDeviceId = 0;
 
+#ifdef AUTOMATED_TESTS
+	std::cout << "[Test] Modo automatizado ativo. O teste encerrará em 5s." << std::endl;
+	auto startTime = std::chrono::steady_clock::now();
+#endif
+
 	std::vector<uint8_t> BufferTrigger;
 	BufferTrigger.resize(10);
 
 	while (true)
 	{
+#ifdef AUTOMATED_TESTS
+		auto now = std::chrono::steady_clock::now();
+		if (std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count() >= 5)
+		{
+			std::cout << "\n[Test] Tempo limite atingido (5s). Encerrando..." << std::endl;
+			break;
+		}
+#endif
 		// frame ~60 FPS
 		// std::this_thread::sleep_for(std::chrono::milliseconds(16));
 		float DeltaTime = 0.016f;

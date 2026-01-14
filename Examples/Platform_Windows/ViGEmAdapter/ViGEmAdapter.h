@@ -1,4 +1,5 @@
 ﻿#pragma once
+#if defined(_WIN32) && defined(USE_VIGEM)
 
 #include <windows.h>
 #include <ViGEm/Client.h>
@@ -23,3 +24,5 @@ private:
 };
 
 } // namespace GamepadCore
+
+#endif // _WIN32 && USE_VIGEM

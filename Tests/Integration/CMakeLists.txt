@@ -15,6 +15,10 @@ endif()
 # 1. Configure Platform Sources and Libs
 set(PLATFORM_SOURCES "")
 set(PLATFORM_LIBS "")
+
+if(AUTOMATED_TESTS)
+    add_compile_definitions(AUTOMATED_TESTS)
+endif()
 if(WIN32)
     # On Windows, we need to compile the WindowsDeviceInfo implementation
     # CMAKE_SOURCE_DIR points to project root (GamepadCore)
@@ -57,8 +61,8 @@ add_executable(tests-audio-haptics
         ${PLATFORM_SOURCES}
 )
 
-# DLL Integration Tests - Only on Windows
-if(WIN32)
+# DLL Integration Tests - Only on Windows and if USE_VIGEM is enabled
+if(WIN32 AND USE_VIGEM)
     # Apps DLL Integration Test - Loads GamepadCoreApp.dll dynamically
     add_executable(tests-app-dll
             Features/dll/app-dll-scope-input.test.cpp
@@ -83,7 +87,7 @@ set(COMMON_INCLUDES
 target_include_directories(tests-adaptive-triggers PRIVATE ${COMMON_INCLUDES})
 target_include_directories(tests-audio-haptics PRIVATE ${COMMON_INCLUDES})
 
-if(WIN32)
+if(WIN32 AND USE_VIGEM)
     target_include_directories(tests-app-dll PRIVATE ${COMMON_INCLUDES})
     target_include_directories(tests-app-dll-haptics PRIVATE ${COMMON_INCLUDES})
 endif()
@@ -92,7 +96,7 @@ endif()
 if(BUILD_TESTS)
     add_test(NAME AdaptiveTriggers COMMAND tests-adaptive-triggers)
     add_test(NAME AudioHaptics COMMAND tests-audio-haptics)
-    if(WIN32)
+    if(WIN32 AND USE_VIGEM)
         add_test(NAME AppDLLInput COMMAND tests-app-dll)
         add_test(NAME AppDLLHaptics COMMAND tests-app-dll-haptics)
     endif()

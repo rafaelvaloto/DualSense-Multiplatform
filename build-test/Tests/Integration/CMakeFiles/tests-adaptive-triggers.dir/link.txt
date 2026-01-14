@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/tests-adaptive-triggers.dir/link.d "CMakeFiles/tests-adaptive-triggers.dir/Features/adaptive-triggers.test.cpp.o" "CMakeFiles/tests-adaptive-triggers.dir/__/__/Examples/Platform_Linux/test_linux_device_info.cpp.o" -o tests-adaptive-triggers  ../../Source/libGamepadCore.a /usr/lib/x86_64-linux-gnu/libSDL2.so

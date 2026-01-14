@@ -96,10 +96,13 @@ int main()
     StartService();
 
     // Roda por alguns segundos para validar o funcionamento
-    std::cout << "[Test] Serviço rodando por 5 segundos para validação..." << std::endl;
-
-
+#ifdef AUTOMATED_TESTS
+    std::cout << "[Test] Modo automatizado ativo. Serviço rodando por 5 segundos para validação..." << std::endl;
     for (int i = 0; i < 50; ++i)
+#else
+    std::cout << "[Test] Modo local ativo. Pressione Ctrl+C para encerrar ou aguarde o fim do loop (50s)." << std::endl;
+    for (int i = 0; i < 500; ++i)
+#endif
     {
         FInputContext state;
         if (GetGamepadStateSafe(0, &state))

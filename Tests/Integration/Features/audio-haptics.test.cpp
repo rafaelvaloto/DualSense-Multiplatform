@@ -534,6 +534,11 @@ int main(int argc, char* argv[])
 
 			std::cout << "[System] Starting audio haptics..." << std::endl;
 
+#ifdef AUTOMATED_TESTS
+			std::cout << "[Test] Modo automatizado ativo. O teste encerrará em 5s." << std::endl;
+			auto startTime = std::chrono::steady_clock::now();
+#endif
+
 			// Start playback/capture
 			if (ma_device_start(&device) != MA_SUCCESS)
 			{
@@ -546,6 +551,15 @@ int main(int argc, char* argv[])
 			// Main loop: play audio and send haptics
 			while (!callbackData.bFinished)
 			{
+#ifdef AUTOMATED_TESTS
+				auto now = std::chrono::steady_clock::now();
+				if (std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count() >= 5)
+				{
+					std::cout << "\n[Test] Tempo limite atingido (5s). Encerrando..." << std::endl;
+					callbackData.bFinished = true;
+					break;
+				}
+#endif
 				// Consume haptics queue and send to controller
 				ConsumeHapticsQueue(AudioHaptics, callbackData);
 

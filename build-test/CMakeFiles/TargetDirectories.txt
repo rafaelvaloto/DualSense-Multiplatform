@@ -1,0 +1,15 @@
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/CMakeFiles/test.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/CMakeFiles/edit_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/CMakeFiles/rebuild_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Examples/Apps/CMakeFiles/test.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Examples/Apps/CMakeFiles/edit_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Examples/Apps/CMakeFiles/rebuild_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Source/CMakeFiles/GamepadCore.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Source/CMakeFiles/test.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Source/CMakeFiles/edit_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Source/CMakeFiles/rebuild_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Tests/Integration/CMakeFiles/tests-adaptive-triggers.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Tests/Integration/CMakeFiles/tests-audio-haptics.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Tests/Integration/CMakeFiles/test.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Tests/Integration/CMakeFiles/edit_cache.dir
+/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Tests/Integration/CMakeFiles/rebuild_cache.dir

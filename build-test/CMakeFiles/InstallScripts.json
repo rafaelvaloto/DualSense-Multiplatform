@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/cmake_install.cmake",
+		"/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Examples/Apps/cmake_install.cmake",
+		"/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Source/cmake_install.cmake",
+		"/home/rafaelvaloto/RiderProjects/GamepadCore/build-test/Tests/Integration/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

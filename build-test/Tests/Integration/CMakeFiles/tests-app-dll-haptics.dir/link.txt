@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/tests-app-dll-haptics.dir/link.d "CMakeFiles/tests-app-dll-haptics.dir/Features/dll/app-dll-scope-haptics.test.cpp.o" -o tests-app-dll-haptics

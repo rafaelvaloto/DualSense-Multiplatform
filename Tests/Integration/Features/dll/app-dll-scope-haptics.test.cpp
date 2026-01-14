@@ -92,7 +92,19 @@ int main()
 
     std::cout << "[Test] O servico de haptics esta ativo via loopback de audio." << std::endl;
     std::cout << "[Test] Toque qualquer audio no sistema para sentir a vibracao no DualSense." << std::endl;
-    std::cout << "[Test] Pressione ENTER para encerrar o teste (ou aguarde 5s)..." << std::endl;
+
+#ifdef AUTOMATED_TESTS
+    std::cout << "[Test] Modo automatizado ativo. Encerrando em 5s..." << std::endl;
+#else
+    std::cout << "[Test] Pressione ENTER para encerrar o teste (ou aguarde 60s)..." << std::endl;
+    
+    // Thread para esperar ENTER
+    std::atomic<bool> stopRequested(false);
+    std::thread inputThread([&stopRequested]() {
+        std::cin.get();
+        stopRequested = true;
+    });
+#endif
 
     // Loop com timeout
     auto startTime = std::chrono::steady_clock::now();
@@ -105,13 +117,32 @@ int main()
         }
         
         auto now = std::chrono::steady_clock::now();
-        if (std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count() >= 5) {
+        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count();
+
+#ifdef AUTOMATED_TESTS
+        if (elapsed >= 5) {
             std::cout << "\n[Test] Tempo de teste atingido (5s). Encerrando..." << std::endl;
             break;
         }
+#else
+        if (stopRequested || elapsed >= 60) {
+            if (stopRequested) std::cout << "\n[Test] Encerrado pelo usuário." << std::endl;
+            else std::cout << "\n[Test] Tempo limite atingido (60s)." << std::endl;
+            break;
+        }
+#endif
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
+
+#ifndef AUTOMATED_TESTS
+    if (inputThread.joinable()) {
+        // Como std::cin.get() bloqueia, no Windows podemos usar o handle do console se quisermos forçar,
+        // mas para simplificar vamos apenas avisar.
+        std::cout << "[Test] Pressione ENTER para finalizar a thread de input..." << std::endl;
+        inputThread.join();
+    }
+#endif
     
     std::cout << "\n[Test] Finalizando..." << std::endl;
     std::cout << "[Test] Chamando StopGamepadService()..." << std::endl;

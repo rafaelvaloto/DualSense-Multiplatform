@@ -76,89 +76,55 @@ Raspberry Pi • Steam Deck • Custom Linux Devices
 
 </div>
 
-The library uses **policy-based design** to abstract platform-specific details, making it trivial to add support for new platforms or hardware. 
+### 🧱 Policy-Based Architecture
+The library leverages **policy-based design** to abstract platform-specific details. This zero-cost abstraction makes it trivial to extend support to new platforms or custom hardware without touching the core logic.
 
-## 🛹 Session: Skate Sim Mod (Special Edition)
-This version is tailored specifically for *Session: Skate Sim*.
-
-* **Truck Physics on Triggers:** The Adaptive Triggers stiffen to simulate the resistance of the skate trucks. The harder you turn, the harder the trigger gets.
-* **Texture Feel:** Feel the pop, the landing, and the grind through audio-based haptics.
-[🔗 Link to the Mod Repository](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
+---
 
 ## ✨ Features
 
-### Advanced Hardware Control
+### 🎮 Advanced Hardware Control
+Unlock the full potential of the DualSense controller with direct access to hardware features.
 
-- **Adaptive Triggers (DualSense)**  
-  Full control over trigger resistance profiles:  Feedback, Weapon, Bow, Galloping, and custom effects via raw HEX commands
-  
-- **Audio-to-Haptic Conversion**  
-  Process real-time audio buffers and convert them into haptic feedback over USB or Bluetooth
-  
-- **RGB Lightbar & Player LEDs**  
-  Programmatically control the RGB lightbar, player indicator LEDs, and microphone mute LED
-  
-- **Gyroscope & Accelerometer**  
-  Access raw IMU data for motion controls and gyro aiming
-  
-- **Battery & Connection Status**  
-  Query battery level, charging state, and connection type (USB/Bluetooth)
+* **Adaptive Triggers:** Full control over resistance profiles including Feedback, Weapon, Bow, Galloping, and raw HEX commands.
+* **Audio-to-Haptic:** Process real-time audio buffers and convert them into high-fidelity haptic feedback (USB & Bluetooth).
+* **RGB & LEDs:** Programmatic control over the Lightbar, player indicator LEDs, and microphone mute status.
+* **IMU Sensors:** Access raw Gyroscope & Accelerometer data for motion controls and precision aiming.
+* **Power Management:** Query battery level, charging status, and connection type.
 
-### Performance & Reliability
+### ⚡ Performance & Reliability
+Built for high-performance engines where every millisecond counts.
 
-- **Zero-Allocation Hot Loop**  
-  Designed for high-performance scenarios where every millisecond counts
-  
-- **Non-Blocking I/O**  
-  Asynchronous device discovery and state updates
-  
-- **Thread-Safe by Design**  
-  Safe for use in multi-threaded game engines
-  
-- **Plug-and-Play**  
-  Automatic device detection and reconnection without blocking the main thread
+* **Zero-Allocation Hot Loop:** No memory allocation during the update loop to prevent GC spikes or latency.
+* **Non-Blocking I/O:** Asynchronous device discovery and state updates.
+* **Thread-Safe:** Designed from the ground up for multi-threaded game engines.
+* **Plug-and-Play:** Hot-swap support with automatic device detection and reconnection.
 
-### Developer Experience
+### 🛠️ Developer Experience
+* **Modern C++20:** Built with concepts, templates, and smart pointers for type safety.
+* **Extensible:** Implement simple platform policies to add new support.
+* **Test Suite:** Includes a standalone integration test target (CMake) to verify features on physical hardware.
+* **MIT Licensed:** Free for commercial and open-source use.
 
-- **Policy-Based Architecture**  
-  Extend the library by implementing simple platform policies — no need to modify core logic
-  
-- **Standalone Integration Test**  
-  Pre-configured CMake target to test all features with your physical controller
-  
-- **Clean, Modern C++20**  
-  Uses concepts, templates, and smart pointers for type-safe, maintainable code
-  
-- **MIT Licensed**  
-  Use it freely in commercial and open-source projects
-
+---
 
 ## 🎯 Real-World Projects
 
-Gamepad-Core isn't just a proof-of-concept — it's **production-ready** and powers real projects used by thousands of developers:
+Gamepad-Core is **production-ready** and powers projects used by thousands of users.
 
 ### 🏆 Unreal Engine — Primary Integration
-
 **[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense/tree/v2.0.0-pre-release)** (v2.0.0-pre-release)
 
-The flagship Unreal Engine plugin that brings **every feature** of Gamepad-Core to UE5 through native Blueprint and C++ APIs.
+The flagship plugin bringing native DualSense support to UE5 via Blueprint and C++.
+* ✅ Live Adaptive Trigger prototyping via Data Tables.
+* ✅ Real-time Audio-to-Haptics submix processing.
+* ✅ Native Input System integration for Force Feedback & Motion.
 
-**What's Powered by Gamepad-Core:**
-- ✅ Adaptive Triggers with live console prototyping and Data Table workflows
-- ✅ Audio-to-Haptics engine for real-time submix processing
-- ✅ Gyroscope aiming for precision FPS controls
-- ✅ Multi-controller support (up to 4 players)
-- ✅ Force Feedback integration with UE's native system
-- ✅ Hot-swap detection for seamless controller switching
-
-**Example projects in Unreal Engine 5.6**
-- [Arena Shooter Sample](https://drive.google.com/file/d/11iUQuWwA4zkFI_eP0roYbTDh0ss8614m/view?usp=drive_link) — Weapon recoil, damage feedback, LED effects
-- [Audio Haptics Demo](https://drive.google.com/file/d/1lGUBfz42gnh2bSIJTptC_LqOdFHsPuSi/view?usp=sharing) — Bluetooth & USB audio conversion
-- [Live Demo: Gyro Aiming YouTube](https://youtu.be/r_NhoODeELU?si=Ca2IOUzEDT7UFls3) — Precision ADS mechanics
-
-> **All v2.x features are 100% powered by Gamepad-Core's API.**
-
----
+### 🛹 Session: Skate Sim Mod (Special Edition)
+A specialized implementation tailored for *Session: Skate Sim*, demonstrating the library's ability to enhance gameplay physics.
+* **Truck Physics on Triggers:** Adaptive triggers stiffen dynamically to simulate truck resistance while turning.
+* **Haptic Texture:** Audio-based haptics allow players to "feel" the pop, landing, and grind friction.
+* [🔗 Link to the Mod Repository](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
 
 ### ⚙️ O3DE (Open 3D Engine) — Gem Integration
 

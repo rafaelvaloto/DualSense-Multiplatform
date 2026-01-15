@@ -50,7 +50,7 @@ int main()
 {
     std::cout << "[Test] Iniciando Teste de Integracao da DLL do App..." << std::endl;
 
-    const char* dllPath = "../../App/GamepadCoreApp.dll";
+    const char* dllPath = "gaming-mods.dll";
 
     std::cout << "[Test] Carregando DLL de: " << dllPath << std::endl;
     HMODULE hDll = LoadLibraryA(dllPath);

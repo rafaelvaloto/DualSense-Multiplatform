@@ -1,4 +1,5 @@
 ﻿#pragma once
+#if defined(_WIN32) && defined(USE_VIGEM)
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -66,3 +67,5 @@ private:
 };
 
 } // namespace GamepadCore
+
+#endif

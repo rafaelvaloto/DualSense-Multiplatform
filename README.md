@@ -127,10 +127,17 @@ The library uses **policy-based design** to abstract platform-specific details, 
   Use it freely in commercial and open-source projects
 
 
-
 ## 🎯 Real-World Projects
 
 Gamepad-Core isn't just a proof-of-concept — it's **production-ready** and powers real projects used by thousands of developers:
+
+## 🛹 Session: Skate Sim Mod (Special Edition)
+This version is tailored specifically for *Session: Skate Sim*.
+
+* **Truck Physics on Triggers:** The Adaptive Triggers stiffen to simulate the resistance of the skate trucks. The harder you turn, the harder the trigger gets.
+* **Texture Feel:** Feel the pop, the landing, and the grind through audio-based haptics.
+[🔗 Link to the Mod Repository](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
+
 
 ### 🏆 Unreal Engine — Primary Integration
 

@@ -7,25 +7,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(WIN32 AND USE_VIGEM)
     set(MOD_SOURCES
-            DualSenseMods.cpp
+            gaming-mods.cpp
             ../Platform_Windows/test_windows_device_info.cpp
             ../Platform_Windows/ViGEmAdapter/ViGEmAdapter.cpp
     )
 
-    add_subdirectory(../Examples/Platform_Windows/ViGEmAdapter/ViGEmClient-master ViGEmClient)
+    add_subdirectory(../Platform_Windows/ViGEmAdapter/ViGEmClient-master ViGEmClient)
 
-    add_library(GamepadModCore SHARED ${MOD_SOURCES})
+    add_library(gaming-mods SHARED ${MOD_SOURCES})
 
-    target_include_directories(GamepadModCore PRIVATE
-            ../Examples/Platform_Windows/ViGEmAdapter/ViGEmClient-master/include
+    target_include_directories(gaming-mods PRIVATE
+            ../Platform_Windows/ViGEmAdapter/ViGEmClient-master/include
     )
 
-    target_compile_definitions(GamepadModCore PRIVATE
+    target_compile_definitions(gaming-mods PRIVATE
         BUILD_GAMEPAD_CORE_TESTS
         USE_VIGEM
     )
 
-    target_link_libraries(GamepadModCore PRIVATE
+    target_link_libraries(gaming-mods PRIVATE
             GamepadCore
             Setupapi
             Hid
@@ -37,10 +37,10 @@ if(WIN32 AND USE_VIGEM)
             ViGEmClient::ViGEmClient
     )
 
-    set_target_properties(GamepadModCore PROPERTIES
-            OUTPUT_NAME "DualSenseModCore"
+    set_target_properties(gaming-mods PROPERTIES
+            OUTPUT_NAME "gaming-mods"
             PREFIX ""
     )
 else()
-    message(STATUS "GamepadModCore (DualSenseModCore) is disabled (requires Windows and USE_VIGEM=ON)")
+    message(STATUS "gaming-mods is disabled (requires Windows and USE_VIGEM=ON)")
 endif()

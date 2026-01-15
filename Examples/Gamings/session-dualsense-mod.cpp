@@ -9,6 +9,74 @@
 #include <string>
 #include <mutex>
 #include <queue>
+#include <map>
+
+std::vector<uint8_t> g_BufferTrigger(10);
+
+struct FSkaterConfig {
+    float LowPassAlpha = 0.99f;
+    float LowPassAlphaBt = 0.98f;
+    uint8_t LightbarR = 200;
+    uint8_t LightbarG = 160;
+    uint8_t LightbarB = 80;
+
+    void LoadFromIni(const std::wstring& filePath) {
+        wchar_t buffer[256];
+        
+        // Read TruckTightness
+        GetPrivateProfileStringW(L"SkaterSettings", L"TruckTightness", L"Medium", buffer, 256, filePath.c_str());
+        UpdateTriggerBuffer(buffer);
+
+        // Read Haptics Settings USB
+        GetPrivateProfileStringW(L"HapticsSettings", L"LowPassAlpha", L"0.99", buffer, 256, filePath.c_str());
+        LowPassAlpha = std::wcstof(buffer, nullptr);
+
+    	// Read Haptics Settings Bluetooth
+        GetPrivateProfileStringW(L"HapticsSettings", L"LowPassAlphaBt", L"0.98", buffer, 256, filePath.c_str());
+        LowPassAlphaBt = std::wcstof(buffer, nullptr);
+
+        // Read Lightbar Color
+        GetPrivateProfileStringW(L"VisualSettings", L"LightbarR", L"200", buffer, 256, filePath.c_str());
+        LightbarR = static_cast<uint8_t>(std::wcstol(buffer, nullptr, 10));
+        GetPrivateProfileStringW(L"VisualSettings", L"LightbarG", L"160", buffer, 256, filePath.c_str());
+        LightbarG = static_cast<uint8_t>(std::wcstol(buffer, nullptr, 10));
+        GetPrivateProfileStringW(L"VisualSettings", L"LightbarB", L"80", buffer, 256, filePath.c_str());
+        LightbarB = static_cast<uint8_t>(std::wcstol(buffer, nullptr, 10));
+    }
+
+private:
+    void UpdateTriggerBuffer(const std::wstring& str) {
+        g_BufferTrigger[0] = 0x21;
+        g_BufferTrigger[1] = 0xfe;
+        g_BufferTrigger[2] = 0x03;
+        g_BufferTrigger[3] = 0xf8;
+        g_BufferTrigger[4] = 0xff;
+        g_BufferTrigger[5] = 0xff;
+        g_BufferTrigger[6] = 0x1f;
+
+        if (str == L"Light") {
+        	g_BufferTrigger[1] = 0xfe;
+        	g_BufferTrigger[2] = 0x03;
+        	g_BufferTrigger[3] = 0xf8;
+        	g_BufferTrigger[4] = 0xff;
+        	g_BufferTrigger[5] = 0xff;
+        	g_BufferTrigger[6] = 0x0a;
+        } else if (str == L"Heavy") {
+        	g_BufferTrigger[1] = 0xfe;
+        	g_BufferTrigger[2] = 0x03;
+        	g_BufferTrigger[3] = 0xf8;
+        	g_BufferTrigger[4] = 0xff;
+        	g_BufferTrigger[5] = 0xff;
+        	g_BufferTrigger[6] = 0x3f;
+        }
+
+    	g_BufferTrigger[7] = 0x00;
+    	g_BufferTrigger[8] = 0x00;
+    	g_BufferTrigger[9] = 0x00;
+    }
+};
+
+FSkaterConfig g_SkaterConfig;
 
 #include "GImplementations/Utils/GamepadAudio.h"
 using namespace FGamepadAudio;
@@ -17,14 +85,14 @@ using namespace FGamepadAudio;
 #include "GCore/Templates/TGenericHardwareInfo.h"
 #include "GCore/Templates/TBasicDeviceRegistry.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
-#include "../Examples/Adapters/Tests/test_device_registry_policy.h"
+#include "../Adapters/Tests/test_device_registry_policy.h"
 
 #ifdef USE_VIGEM
-#include "../Examples/Platform_Windows/ViGEmAdapter/ViGEmAdapter.h"
+#include "../Platform_Windows/ViGEmAdapter/ViGEmAdapter.h"
 #endif
 
 #if _WIN32
-#include "../Examples/Platform_Windows/test_windows_hardware_policy.h"
+#include "../Platform_Windows/test_windows_hardware_policy.h"
 using TestHardwarePolicy = Ftest_windows_platform::Ftest_windows_hardware_policy;
 using TestHardwareInfo = Ftest_windows_platform::Ftest_windows_hardware;
 #endif
@@ -172,8 +240,8 @@ void AudioDataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma
 			float inLeft = tempBuffer[i * 2];
 			float inRight = tempBuffer[i * 2 + 1];
 
-			pData->LowPassStateLeft = kOneMinusAlpha * inLeft + kLowPassAlpha * pData->LowPassStateLeft;
-			pData->LowPassStateRight = kOneMinusAlpha * inRight + kLowPassAlpha * pData->LowPassStateRight;
+			pData->LowPassStateLeft = (1.0f - g_SkaterConfig.LowPassAlpha) * inLeft + g_SkaterConfig.LowPassAlpha * pData->LowPassStateLeft;
+			pData->LowPassStateRight = (1.0f - g_SkaterConfig.LowPassAlpha) * inRight + g_SkaterConfig.LowPassAlpha * pData->LowPassStateRight;
 
 			float outLeft = std::clamp(inLeft - pData->LowPassStateLeft, -1.0f, 1.0f);
 			float outRight = std::clamp(inRight - pData->LowPassStateRight, -1.0f, 1.0f);
@@ -256,8 +324,8 @@ void AudioDataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma
 				float inLeft = resampledData[dataIndex];
 				float inRight = resampledData[dataIndex + 1];
 
-				pData->LowPassStateLeft = kOneMinusAlphaBt * inLeft + kLowPassAlphaBt * pData->LowPassStateLeft;
-				pData->LowPassStateRight = kOneMinusAlphaBt * inRight + kLowPassAlphaBt * pData->LowPassStateRight;
+				pData->LowPassStateLeft = (1.0f - g_SkaterConfig.LowPassAlphaBt) * inLeft + g_SkaterConfig.LowPassAlphaBt * pData->LowPassStateLeft;
+				pData->LowPassStateRight = (1.0f - g_SkaterConfig.LowPassAlphaBt) * inRight + g_SkaterConfig.LowPassAlphaBt * pData->LowPassStateRight;
 
 				resampledData[dataIndex] = inLeft - pData->LowPassStateLeft;
 				resampledData[dataIndex + 1] = inRight - pData->LowPassStateRight;
@@ -347,24 +415,14 @@ void AudioLoop()
 {
     std::cout << "[AppDLL] Audio Loop Started." << std::endl;
 
-	std::vector<uint8_t> BufferTrigger;
-	BufferTrigger.resize(10);
-	BufferTrigger[0] = 0x21;
-	BufferTrigger[1] = 0xfe;
-	BufferTrigger[2] = 0x03;
-	BufferTrigger[3] = 0xf8;
-	BufferTrigger[4] = 0xff;
-	BufferTrigger[5] = 0xff;
-	BufferTrigger[6] = 0x1f;
-	BufferTrigger[7] = 0x00;
-	BufferTrigger[8] = 0x00;
-	BufferTrigger[9] = 0x00;
-
 	ISonyGamepad* Gamepad = g_Registry->GetLibrary(TargetDeviceId);
+	Gamepad->SetLightbar({g_SkaterConfig.LightbarR, g_SkaterConfig.LightbarG, g_SkaterConfig.LightbarB});
+	Gamepad->DualSenseSettings(0x10, 0x01, 0x7C, 0x7C, 0x7C, 0xFC, 0x00, 0x00);
+
 	auto Trigger = Gamepad->GetIGamepadTrigger();
 	if (Trigger)
 	{
-		Trigger->SetCustomTrigger(EDSGamepadHand::AnyHand, BufferTrigger);
+		Trigger->SetCustomTrigger(EDSGamepadHand::AnyHand, g_BufferTrigger);
 	}
 	Gamepad->UpdateOutput();
 
@@ -376,7 +434,7 @@ void AudioLoop()
             IGamepadAudioHaptics* AudioHaptics = Gamepad->GetIGamepadHaptics();
             if (AudioHaptics)
             {
-                Gamepad->DualSenseSettings(0x10, 0x7C, 0x7C, 0x7C, 0x7C, 0xFC, 0x00, 0x00);
+
 
                 if (!g_AudioDeviceInitialized || g_AudioCallbackData.bIsWireless != bIsWireless || (g_AudioDeviceInitialized && ma_device_get_state(&g_AudioDevice) == ma_device_state_stopped))
                 {
@@ -489,8 +547,8 @@ void InputLoop()
                     }
 #endif
                     static int HeartbeatCounter = 0;
-                    if (++HeartbeatCounter % 60 == 0) {
-                        std::cout << "[AppDLL] Input Loop Alive - Cross: " << (CurrentState->bCross ? "YES" : "NO") << std::endl;
+                    if (++HeartbeatCounter % 600 == 0) {
+                        std::cout << "[AppDLL] Input Loop Alive" << std::endl;
                     }
                 }
             }
@@ -509,7 +567,6 @@ void InputLoop()
                  std::cout << "[AppDLL] Gamepad Object is NULL for ID " << TargetDeviceId << std::endl;
              }
         }
-
     }
 
     std::cout << "[AppDLL] Input Loop Stopped." << std::endl;
@@ -605,6 +662,12 @@ extern "C" {
         {
             return;
         }
+
+        // Carregar configurações do INI
+        g_SkaterConfig.LoadFromIni(L".\\config.ini");
+        std::cout << "[AppDLL] Config Loaded"
+                  << " | Alpha=" << g_SkaterConfig.LowPassAlpha 
+                  << " | AlphaBt=" << g_SkaterConfig.LowPassAlphaBt << std::endl;
 
         if (g_ServiceThread.joinable())
         {

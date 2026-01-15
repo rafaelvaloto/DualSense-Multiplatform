@@ -88,6 +88,8 @@ target_include_directories(tests-adaptive-triggers PRIVATE ${COMMON_INCLUDES})
 target_include_directories(tests-audio-haptics PRIVATE ${COMMON_INCLUDES})
 
 if(WIN32 AND USE_VIGEM)
+    target_compile_definitions(tests-app-dll PRIVATE USE_VIGEM)
+    target_compile_definitions(tests-app-dll-haptics PRIVATE USE_VIGEM)
     target_include_directories(tests-app-dll PRIVATE ${COMMON_INCLUDES})
     target_include_directories(tests-app-dll-haptics PRIVATE ${COMMON_INCLUDES})
 endif()

@@ -52,7 +52,7 @@ int main()
 
     bool nonInteractive = false;
     
-    const char* dllPath = "../../App/GamepadCoreApp.dll";
+    const char* dllPath = "gaming-mods.dll";
 
     std::cout << "[Test] Carregando DLL de: " << dllPath << std::endl;
     HMODULE hDll = LoadLibraryA(dllPath);

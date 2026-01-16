@@ -117,8 +117,6 @@ A specialized implementation tailored for *Session: Skate Sim*, demonstrating th
 * **Truck Physics on Triggers:** Adaptive triggers stiffen dynamically to simulate truck resistance while turning.
 * **Haptic Texture:** Audio-based haptics allow players to "feel" the pop, landing, and grind friction on different surfaces.
 
----
-
 ### 🚀 Build Mods for Your Favorite Games
 Want to create a similar mod for another game?
 

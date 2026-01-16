@@ -109,14 +109,25 @@ Built for high-performance engines where every millisecond counts.
 ---
 
 ## 🎯 Real-World Projects
+**Gamepad-Core** is production-ready and currently powers projects used by the gaming community.
 
-Gamepad-Core is **production-ready** and powers projects used by thousands of users.
-
-### 🛹 Session: Skate Sim Mod (Special Edition)
+### 🛹 [Session: Skate Sim - Native DualSense Mod](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
 A specialized implementation tailored for *Session: Skate Sim*, demonstrating the library's ability to enhance gameplay physics.
+
 * **Truck Physics on Triggers:** Adaptive triggers stiffen dynamically to simulate truck resistance while turning.
-* **Haptic Texture:** Audio-based haptics allow players to "feel" the pop, landing, and grind friction.
-* [🔗 Link to the Mod Repository](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
+* **Haptic Texture:** Audio-based haptics allow players to "feel" the pop, landing, and grind friction on different surfaces.
+
+---
+
+### 🚀 Build Mods for Your Favorite Games
+Want to create a similar mod for another game?
+
+The **Session Mod** repository above serves as a perfect **Template**. You can fork it or review the source code to learn how to:
+1.  Initialize the GamepadCore library within a DLL.
+2.  Hook into game events (like Unreal Engine physics).
+3.  Translate game audio/physics into Haptics and Trigger effects.
+
+**[👉 Start by cloning the Session Mod Repo](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)**
 
 ### 🏆 Unreal Engine — Primary Integration
 **[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense/tree/v2.0.0-pre-release)** (v2.0.0-pre-release)

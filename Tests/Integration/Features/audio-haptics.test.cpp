@@ -507,7 +507,7 @@ int main(int argc, char* argv[])
 				deviceConfig = ma_device_config_init(ma_device_type_loopback);
 				deviceConfig.capture.format = ma_format_f32;
 				deviceConfig.capture.channels = 2;
-				deviceConfig.capture.pDeviceID = nullptr; // Default
+				deviceConfig.capture.pDeviceID = nullptr;  // Default
 				deviceConfig.wasapi.loopbackProcessID = 0; // Capture from all processes
 			}
 			else
@@ -525,7 +525,10 @@ int main(int argc, char* argv[])
 			if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS)
 			{
 				std::cerr << "[Error] Failed to initialize audio device." << std::endl;
-				if (!bUseSystemAudio) ma_decoder_uninit(&decoder);
+				if (!bUseSystemAudio)
+				{
+					ma_decoder_uninit(&decoder);
+				}
 				return 1;
 			}
 
@@ -550,7 +553,10 @@ int main(int argc, char* argv[])
 			{
 				std::cerr << "[Error] Failed to start audio device." << std::endl;
 				ma_device_uninit(&device);
-				if (!bUseSystemAudio) ma_decoder_uninit(&decoder);
+				if (!bUseSystemAudio)
+				{
+					ma_decoder_uninit(&decoder);
+				}
 				return 1;
 			}
 

@@ -1,17 +1,16 @@
 ﻿#ifdef BUILD_GAMEPAD_CORE_TESTS
-#include <chrono>
-#include <cmath>
-#include <format>
-#include <iomanip>
-#include <iostream>
-#include <memory>
-#include <thread>
-
 #include "../../../Examples/Adapters/Tests/test_device_registry_policy.h"
 #include "GCore/Interfaces/IPlatformHardwareInfo.h"
 #include "GCore/Templates/TBasicDeviceRegistry.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
+#include <chrono>
+#include <cmath>
+#include <format>
 #include <functional>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <thread>
 using TestDeviceRegistry = GamepadCore::TBasicDeviceRegistry<Ftest_device_registry_policy>;
 
 #if _WIN32
@@ -71,7 +70,7 @@ int main()
 	BufferTrigger.resize(10);
 
 	bool bControllerFound = false;
-	int MaxWaitIterations = 300; 
+	int MaxWaitIterations = 300;
 
 	while (true)
 	{
@@ -79,9 +78,12 @@ int main()
 		auto now = std::chrono::steady_clock::now();
 		if (std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count() >= 5)
 		{
-			if (bControllerFound) {
+			if (bControllerFound)
+			{
 				std::cout << "\n[Test] Timeout reached (5s). Finishing..." << std::endl;
-			} else {
+			}
+			else
+			{
 				std::cout << "\n[Test] No controller found in automated mode. Skipping test." << std::endl;
 			}
 			break;
@@ -118,13 +120,13 @@ int main()
 			{
 				StatusText = "Cross";
 				Gamepad->SetVibration(0, 200);
-				Gamepad->SetLightbar({255, 0, 0}); 
+				Gamepad->SetLightbar({255, 0, 0});
 			}
 			else if (InputState->bCircle)
 			{
 				StatusText = "Circle";
 				Gamepad->SetVibration(100, 0);
-				Gamepad->SetLightbar({0, 0, 255}); 
+				Gamepad->SetLightbar({0, 0, 255});
 			}
 			else if (InputState->bSquare)
 			{
@@ -243,7 +245,7 @@ int main()
 				bWasDebugAnalog = !bWasDebugAnalog;
 
 				Gamepad->SetVibration(0, 0);
-				Gamepad->SetLightbar({0, 255, 0}); 
+				Gamepad->SetLightbar({0, 255, 0});
 
 				Trigger->StopTrigger(EDSGamepadHand::Left);
 				Trigger->StopTrigger(EDSGamepadHand::Right);

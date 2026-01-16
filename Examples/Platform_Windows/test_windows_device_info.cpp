@@ -178,17 +178,17 @@ bool Ftest_windows_device_info::CreateHandle(FDeviceContext* DeviceContext)
 		return false;
 	}
 
-    // Tentar duplicar o handle para garantir persistência (opcional, mais para segurança interna)
-    HANDLE DuplicatedHandle = INVALID_HANDLE_VALUE;
-    if (DuplicateHandle(GetCurrentProcess(), DeviceHandle, GetCurrentProcess(), &DuplicatedHandle, 0, FALSE, DUPLICATE_SAME_ACCESS))
-    {
-        CloseHandle(DeviceHandle);
-        DeviceContext->Handle = DuplicatedHandle;
-    }
-    else
-    {
-        DeviceContext->Handle = DeviceHandle;
-    }
+	// Tentar duplicar o handle para garantir persistência (opcional, mais para segurança interna)
+	HANDLE DuplicatedHandle = INVALID_HANDLE_VALUE;
+	if (DuplicateHandle(GetCurrentProcess(), DeviceHandle, GetCurrentProcess(), &DuplicatedHandle, 0, FALSE, DUPLICATE_SAME_ACCESS))
+	{
+		CloseHandle(DeviceHandle);
+		DeviceContext->Handle = DuplicatedHandle;
+	}
+	else
+	{
+		DeviceContext->Handle = DeviceHandle;
+	}
 	ConfigureFeatures(DeviceContext);
 	return true;
 }

@@ -18,6 +18,7 @@ add_definitions(-DBUILD_GAMEPAD_CORE_TESTS)
 
 # Option to enable or disable integration tests (default is ON)
 option(BUILD_TESTS "Build integration tests" ON)
+option(BUILD_DLL_TESTS "Build DLL integration tests" OFF)
 option(USE_VIGEM "Enable ViGEm support" ON)
 option(AUTOMATED_TESTS "Enable automated tests (timeout for CI)" OFF)
 

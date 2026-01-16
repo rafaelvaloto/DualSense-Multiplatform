@@ -61,8 +61,8 @@ add_executable(tests-audio-haptics
         ${PLATFORM_SOURCES}
 )
 
-# DLL Integration Tests - Only on Windows and if USE_VIGEM is enabled
-if(WIN32 AND USE_VIGEM)
+# DLL Integration Tests - Only on Windows and if USE_VIGEM and BUILD_DLL_TESTS are enabled
+if(WIN32 AND USE_VIGEM AND BUILD_DLL_TESTS)
     # Apps DLL Integration Test - Loads GamepadCoreApp.dll dynamically
     add_executable(tests-app-dll
             Features/dll/app-dll-scope-input.test.cpp
@@ -87,7 +87,7 @@ set(COMMON_INCLUDES
 target_include_directories(tests-adaptive-triggers PRIVATE ${COMMON_INCLUDES})
 target_include_directories(tests-audio-haptics PRIVATE ${COMMON_INCLUDES})
 
-if(WIN32 AND USE_VIGEM)
+if(WIN32 AND USE_VIGEM AND BUILD_DLL_TESTS)
     target_compile_definitions(tests-app-dll PRIVATE USE_VIGEM)
     target_compile_definitions(tests-app-dll-haptics PRIVATE USE_VIGEM)
     target_include_directories(tests-app-dll PRIVATE ${COMMON_INCLUDES})
@@ -98,7 +98,7 @@ endif()
 if(BUILD_TESTS)
     add_test(NAME AdaptiveTriggers COMMAND tests-adaptive-triggers)
     add_test(NAME AudioHaptics COMMAND tests-audio-haptics)
-    if(WIN32 AND USE_VIGEM)
+    if(WIN32 AND USE_VIGEM AND BUILD_DLL_TESTS)
         add_test(NAME AppDLLInput COMMAND tests-app-dll)
         add_test(NAME AppDLLHaptics COMMAND tests-app-dll-haptics)
     endif()

@@ -16,7 +16,7 @@ jobs:
         build_type: [Release]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'

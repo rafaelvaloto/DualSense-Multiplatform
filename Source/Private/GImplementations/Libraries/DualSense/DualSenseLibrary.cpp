@@ -75,7 +75,6 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 {
 	SetDeviceContexts(Context);
 	FDeviceContext* DSContext = GetMutableDeviceContext();
-	ResetLights();
 	if (DSContext->ConnectionType == EDSDeviceConnection::Bluetooth)
 	{
 		{
@@ -87,7 +86,7 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 
 			unsigned char* Output = &MutableBuffer[Padding];
 			Output[0] = 0xFF;
-			Output[1] = 0x53;
+			Output[1] = 0b11111111;
 			Output[38] = 0x00;
 			Output[44] = 0x00;
 			Output[45] = 0x00;
@@ -105,7 +104,7 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		}
 		DSContext->Output.Feature.VibrationMode = 0xFF;
-		DSContext->Output.Feature.FeatureMode = 0xF7;
+		DSContext->Output.Feature.FeatureMode = 0x57;
 
 		// Audio haptics bluetooth
 		DSContext->BufferAudio[0] = 0x32;
@@ -113,9 +112,9 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 		DSContext->BufferAudio[2] = 0x91;
 		DSContext->BufferAudio[3] = 0x07;
 		DSContext->BufferAudio[4] = 0xFE;
-		DSContext->BufferAudio[5] = 180;
+		DSContext->BufferAudio[5] = 55;
 		DSContext->BufferAudio[6] = 55;
-		DSContext->BufferAudio[7] = 180;
+		DSContext->BufferAudio[7] = 55;
 		DSContext->BufferAudio[8] = 55;
 		DSContext->BufferAudio[9] = 0xFF;
 
@@ -123,6 +122,7 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 		return true;
 	}
 
+	ResetLights();
 	constexpr std::uint8_t FeatureMode = 0x57;
 	DSContext->Output.Feature = {FeatureMode, 0xFF, 0x00, 0x00};
 	UpdateOutput();

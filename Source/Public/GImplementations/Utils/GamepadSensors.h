@@ -100,13 +100,13 @@ namespace FGamepadSensors
 		float fRawAccY = static_cast<float>(RawAccY);
 		float fRawAccZ = static_cast<float>(RawAccZ);
 
-		FinalGyro.X = (fRawGyroX - Calibration.GyroBiasX) * Calibration.GyroFactorX / DS_GYRO_RES_PER_DEG_S;
-		FinalGyro.Y = (fRawGyroY - Calibration.GyroBiasY) * Calibration.GyroFactorY / DS_GYRO_RES_PER_DEG_S;
-		FinalGyro.Z = (fRawGyroZ - Calibration.GyroBiasZ) * Calibration.GyroFactorZ / DS_GYRO_RES_PER_DEG_S;
+		FinalGyro.X = (fRawGyroX - Calibration.GyroBiasX) * Calibration.GyroFactorX;
+		FinalGyro.Y = (fRawGyroY - Calibration.GyroBiasY) * Calibration.GyroFactorY;
+		FinalGyro.Z = (fRawGyroZ - Calibration.GyroBiasZ) * Calibration.GyroFactorZ;
 
-		FinalAccel.X = (fRawAccX - Calibration.AccelBiasX) * Calibration.AccelFactorX / DS_ACC_RES_PER_G;
-		FinalAccel.Y = (fRawAccY - Calibration.AccelBiasY) * Calibration.AccelFactorY / DS_ACC_RES_PER_G;
-		FinalAccel.Z = (fRawAccZ - Calibration.AccelBiasZ) * Calibration.AccelFactorZ / DS_ACC_RES_PER_G;
+		FinalAccel.X = (fRawAccX - Calibration.AccelBiasX) * Calibration.AccelFactorX;
+		FinalAccel.Y = (fRawAccY - Calibration.AccelBiasY) * Calibration.AccelFactorY;
+		FinalAccel.Z = (fRawAccZ - Calibration.AccelBiasZ) * Calibration.AccelFactorZ;
 	}
 
 	inline void ProcessMotionDualShock(const std::uint8_t* /*Buffer*/,

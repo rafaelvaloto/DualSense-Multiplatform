@@ -18,6 +18,10 @@ using TestDeviceRegistry = GamepadCore::TBasicDeviceRegistry<Ftest_device_regist
 #include "../../../Examples/Platform_Windows/test_windows_hardware_policy.h"
 using TestHardwarePolicy = Ftest_windows_platform::Ftest_windows_hardware_policy;
 using TestHardwareInfo = Ftest_windows_platform::Ftest_windows_hardware;
+#elif __unix__
+#include "../../../Examples/Platform_Linux/test_linux_hardware_policy.h"
+using TestHardwarePolicy = Ftest_linux_platform::Ftest_linux_hardware_policy;
+using TestHardwareInfo = Ftest_linux_platform::Ftest_linux_hardware;
 #endif
 
 int main()

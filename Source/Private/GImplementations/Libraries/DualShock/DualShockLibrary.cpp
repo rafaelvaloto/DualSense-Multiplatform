@@ -10,6 +10,7 @@
 #include "GImplementations/Utils/GamepadOutput.h"
 #include "GImplementations/Utils/GamepadSensors.h"
 #include "GImplementations/Utils/GamepadTouch.h"
+#include <iomanip>
 
 bool FDualShockLibrary::Initialize(const FDeviceContext& Context)
 {
@@ -37,24 +38,47 @@ void FDualShockLibrary::UpdateInput(float /*Delta*/)
 
 	using namespace FGamepadInput;
 	const size_t Padding = Context->ConnectionType == EDSDeviceConnection::Bluetooth ? 3 : 1;
-	DualShockRaw(&Context->BufferDS4[Padding], InputToFill);
-
-	if (Context->bEnableGesture || Context->bEnableTouch)
+	if (Padding == 3)
 	{
-		using namespace FGamepadTouch;
-		ProcessTouchDualShock(&Context->Buffer[Padding], InputToFill);
+		DualShockRaw(&Context->BufferDS4[Padding], InputToFill);
+		if (Context->bEnableGesture || Context->bEnableTouch)
+		{
+			using namespace FGamepadTouch;
+			ProcessTouchDualShock(&Context->BufferDS4[Padding], InputToFill, Context->ConnectionType);
+		}
+
+		if (Context->bEnableAccelerometerAndGyroscope)
+		{
+			DSCoreTypes::DSVector3D GyroDeg;
+			DSCoreTypes::DSVector3D AccelG;
+
+			using namespace FGamepadSensors;
+			ProcessMotionDualShock(&Context->BufferDS4[Padding], Context->Calibration, Context->ConnectionType, GyroDeg, AccelG);
+
+			InputToFill->Gyroscope = GyroDeg;
+			InputToFill->Accelerometer = AccelG;
+		}
 	}
-
-	if (Context->bEnableAccelerometerAndGyroscope)
+	else
 	{
-		DSCoreTypes::DSVector3D GyroDeg;
-		DSCoreTypes::DSVector3D AccelG;
+		DualShockRaw(&Context->Buffer[Padding], InputToFill);
+		if (Context->bEnableGesture || Context->bEnableTouch)
+		{
+			using namespace FGamepadTouch;
+			ProcessTouchDualShock(&Context->Buffer[Padding], InputToFill, Context->ConnectionType);
+		}
 
-		using namespace FGamepadSensors;
-		ProcessMotionDualShock(&Context->Buffer[Padding], Context->Calibration, GyroDeg, AccelG);
+		if (Context->bEnableAccelerometerAndGyroscope)
+		{
+			DSCoreTypes::DSVector3D GyroDeg;
+			DSCoreTypes::DSVector3D AccelG;
 
-		InputToFill->Gyroscope = GyroDeg;
-		InputToFill->Accelerometer = AccelG;
+			using namespace FGamepadSensors;
+			ProcessMotionDualShock(&Context->Buffer[Padding], Context->Calibration, Context->ConnectionType, GyroDeg, AccelG);
+
+			InputToFill->Gyroscope = GyroDeg;
+			InputToFill->Accelerometer = AccelG;
+		}
 	}
 
 	Context->SwapInputBuffers();

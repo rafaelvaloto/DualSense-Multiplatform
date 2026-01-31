@@ -32,8 +32,9 @@ jobs:
         languages: ${{ matrix.language }}
         config: |
           paths-ignore:
-            - '**/miniaudio.h'
-            - '**/miniaudio_impl.cpp'
+            - 'Source/Public/Libs/miniaudio.h'
+            - 'Source/Private/GImplementations/Utils/MiniAudio/miniaudio_impl.cpp'
+            - 'Source/Public/Libs/**'
             - '**/*.wav'
             - 'Tests/Integration/Datasets/**'
         queries: security-extended,security-and-quality

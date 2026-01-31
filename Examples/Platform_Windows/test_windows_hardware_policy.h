@@ -8,8 +8,8 @@
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "test_windows_device_info.h"
 #include <cwchar>
-#include <propsys.h>
 #include <mmdeviceapi.h>
+#include <propsys.h>
 #include <setupapi.h>
 #include <string>
 
@@ -17,15 +17,13 @@
 #undef DEFINE_PROPERTYKEY
 #endif
 #define DEFINE_PROPERTYKEY(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8, pid) \
-    extern "C" const __declspec(selectany) PROPERTYKEY name \
-        = { { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }, pid }
+	extern "C" const __declspec(selectany) PROPERTYKEY name = {{l, w1, w2, {b1, b2, b3, b4, b5, b6, b7, b8}}, pid}
 
 #ifdef DEFINE_DEVPROPKEY
 #undef DEFINE_DEVPROPKEY
 #endif
 #define DEFINE_DEVPROPKEY(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8, pid) \
-    extern "C" const __declspec(selectany) DEVPROPKEY name \
-        = { { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }, pid }
+	extern "C" const __declspec(selectany) DEVPROPKEY name = {{l, w1, w2, {b1, b2, b3, b4, b5, b6, b7, b8}}, pid}
 
 #include <initguid.h>
 

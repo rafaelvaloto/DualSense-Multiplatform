@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -16,7 +17,6 @@
 #include <queue>
 #include <thread>
 #include <vector>
-#include <filesystem>
 namespace fs = std::filesystem;
 
 // miniaudio for audio playback and WAV decoding

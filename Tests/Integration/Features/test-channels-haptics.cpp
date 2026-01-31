@@ -8,15 +8,15 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <filesystem>
 #include <iomanip>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <queue>
 #include <thread>
 #include <vector>
-#include <map>
-#include <filesystem>
 namespace fs = std::filesystem;
 
 // miniaudio for audio playback and WAV decoding
@@ -352,13 +352,19 @@ public:
 private:
 	void Run()
 	{
-		if (!Gamepad) return;
+		if (!Gamepad)
+		{
+			return;
+		}
 
 		std::cout << "[Worker] Starting audio worker for controller (File: " << (bUseSystemAudio ? "System Audio" : WavFilePath) << ")..." << std::endl;
 
 		bool bIsWireless = Gamepad->GetConnectionType() == EDSDeviceConnection::Bluetooth;
 		IGamepadAudioHaptics* AudioHaptics = Gamepad->GetIGamepadHaptics();
-		if (!AudioHaptics) return;
+		if (!AudioHaptics)
+		{
+			return;
+		}
 
 		FDeviceContext* Context = Gamepad->GetMutableDeviceContext();
 		if (!bIsWireless && Context)
@@ -424,14 +430,20 @@ private:
 		ma_device device;
 		if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS)
 		{
-			if (bDecoderInitialized) ma_decoder_uninit(&decoder);
+			if (bDecoderInitialized)
+			{
+				ma_decoder_uninit(&decoder);
+			}
 			return;
 		}
 
 		if (ma_device_start(&device) != MA_SUCCESS)
 		{
 			ma_device_uninit(&device);
-			if (bDecoderInitialized) ma_decoder_uninit(&decoder);
+			if (bDecoderInitialized)
+			{
+				ma_decoder_uninit(&decoder);
+			}
 			return;
 		}
 
@@ -442,7 +454,10 @@ private:
 		}
 
 		ma_device_uninit(&device);
-		if (bDecoderInitialized) ma_decoder_uninit(&decoder);
+		if (bDecoderInitialized)
+		{
+			ma_decoder_uninit(&decoder);
+		}
 		bFinished.store(true);
 	}
 
@@ -539,7 +554,6 @@ int main(int argc, char* argv[])
 					std::this_thread::sleep_for(std::chrono::seconds(1));
 				}
 
-
 				if (Gamepad)
 				{
 					std::string SelectedWav;
@@ -581,7 +595,10 @@ int main(int argc, char* argv[])
 
 #ifdef AUTOMATED_TESTS
 		static auto StartTime = std::chrono::steady_clock::now();
-		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - StartTime).count() >= 10) break;
+		if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - StartTime).count() >= 10)
+		{
+			break;
+		}
 #endif
 	}
 

@@ -13,20 +13,20 @@ if(WIN32)
     add_compile_definitions(UNICODE _UNICODE)
 endif()
 
-# Global definition for test-specific code blocks
-add_definitions(-DBUILD_GAMEPAD_CORE_TESTS)
-
-# Option to enable or disable integration tests (default is ON)
-option(BUILD_TESTS "Build integration tests" ON)
-option(AUTOMATED_TESTS "Enable automated tests (timeout for CI)" OFF)
-
-if(BUILD_TESTS)
-    enable_testing()
-endif()
-
 add_subdirectory(Source)
 
-if(BUILD_TESTS)
-    # Process the integration tests folder
-    add_subdirectory(../../CLionProjects/Gamepad-Core-Tests/Integration/Integration)
+# Tests são opcionais - só inclui se o submodule foi inicializado
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Tests/CMakeLists.txt")
+    # Global definition for test-specific code blocks
+    add_definitions(-DBUILD_GAMEPAD_CORE_TESTS)
+
+    option(BUILD_TESTS "Build integration tests" ON)
+    option(AUTOMATED_TESTS "Enable automated tests (timeout for CI)" OFF)
+
+    if(BUILD_TESTS)
+        enable_testing()
+        add_subdirectory(Tests)
+    endif()
+else()
+    message(STATUS "Tests submodule not initialized - skipping tests")
 endif()

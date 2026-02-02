@@ -32,46 +32,14 @@
 ![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white)
 ![O3DE](https://img.shields.io/badge/O3DE-FF6D00?style=for-the-badge&logo=op3n&logoColor=white)
 
----
-
 **Works with any C++ project — Game Engines, Emulators, Desktop Apps, and more**
 
 [Features](#-features) • [Quick Start](#-quick-start) • [Integration](#-integration) • [Examples](#-real-world-projects) • [Architecture](#design-philosophy)
 
+
+---
+
 </div>
-
-> [!IMPORTANT]
-> **API Change:** The `BufferOutput` attribute in the `FDeviceContext` struct is now **private**.
-> To access the write buffer, use the new method: `Context->GetRawOutputBuffer()`.
-
->
-> **Migration:**
-> 1. In your `Write` method of your hardware policy, replace `Context->BufferOutput` with `Context->GetRawOutputBuffer()`.
-> 2. When clearing the buffer (e.g., in `InvalidateHandle`), use:
-> ```cpp
-> unsigned char* RawOutput = Context->GetRawOutputBuffer();
-> std::memset(RawOutput, 0, 78); // 78 is the default output buffer size
-> ```
-
-## 🎮 Release >= v0.0.12
-
-> [!IMPORTANT]
-> **After calling any effect event on the controller (lights, triggers, vibrations, etc.), it is always necessary to call `Gamepad->UpdateOutput()` to apply the changes.**
-
-Example:
-```cpp
-// Set LED color
-gamepad->SetLightbar(255, 0, 0);
-
-// Set trigger effect
-gamepad->SetResistance(TriggerEffect:: Resistance, ... );
-
-// Apply vibration
-gamepad->SetVibration(0.5f, 0.5f);
-
-// ⚠️ REQUIRED: Update output to apply all changes
-gamepad->UpdateOutput();
-```
 
 ## 🚀 What is Gamepad-Core? 
 
@@ -542,6 +510,28 @@ Tells the library **how** to discover and communicate with devices on your platf
 - **Custom:** Implement your own for proprietary SDKs
 
 ---
+
+> [!IMPORTANT]
+> **API Change:** The `BufferOutput` attribute in the `FDeviceContext` struct is now **private**.
+> To access the write buffer, use the new method: `Context->GetRawOutputBuffer()`.
+
+> [!IMPORTANT]
+> **After calling any effect event on the controller (lights, triggers, vibrations, etc.), it is always necessary to call `Gamepad->UpdateOutput()` to apply the changes.**
+
+Example:
+```cpp
+// Set LED color
+gamepad->SetLightbar(255, 0, 0);
+
+// Set trigger effect
+gamepad->SetResistance(TriggerEffect:: Resistance, ... );
+
+// Apply vibration
+gamepad->SetVibration(0.5f, 0.5f);
+
+// ⚠️ REQUIRED: Update output to apply all changes
+gamepad->UpdateOutput();
+```
 
 ## 🧪 Building from Source
 

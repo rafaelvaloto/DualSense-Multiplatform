@@ -1,0 +1,3 @@
+[submodule "Tests"]
+	path = Tests
+	url = https://github.com/rafaelvaloto/Gamepad-Core-Tests.git

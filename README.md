@@ -213,7 +213,6 @@ cmake --build cmake-build-release --target test-gamepad-outputs -j
 
 # 3. Run (make sure your DualSense/DualShock is connected)
 ./cmake-build-release/Tests/Integration/test-gamepad-inputs
-
 ```
 
 ### 🎮 Test Controls

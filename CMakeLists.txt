@@ -15,8 +15,27 @@ endif()
 
 add_subdirectory(Source)
 
-# Tests são opcionais - só inclui se o submodule foi inicializado
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Tests/CMakeLists.txt")
+
+# ============================================
+# Audio Module (opcional)
+# ============================================
+set(AUDIO_MODULE_PATH "${CMAKE_SOURCE_DIR}/Libs/miniaudio")
+
+if(EXISTS "${AUDIO_MODULE_PATH}/miniaudio.h")
+    target_sources(GamepadCore PRIVATE "${AUDIO_MODULE_PATH}/miniaudio_impl.cpp")
+    target_include_directories(GamepadCore PRIVATE "${AUDIO_MODULE_PATH}")
+    target_compile_definitions(GamepadCore PUBLIC GAMEPAD_CORE_HAS_AUDIO=1)
+    message(STATUS "GamepadCore: Audio module ENABLED")
+else()
+    target_compile_definitions(GamepadCore PUBLIC GAMEPAD_CORE_HAS_AUDIO=0)
+    message(STATUS "GamepadCore: Audio module not found")
+    message(STATUS "  To enable: git submodule update --init Libs/miniaudio")
+endif()
+
+# ============================================
+# Tests Module (opcional)
+# ============================================
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Tests/Integration/CMakeLists.txt")
     # Global definition for test-specific code blocks
     add_definitions(-DBUILD_GAMEPAD_CORE_TESTS)
 

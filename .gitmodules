@@ -1,3 +1,6 @@
 [submodule "Tests"]
 	path = Tests
 	url = https://github.com/rafaelvaloto/Gamepad-Core-Tests.git
+[submodule "miniaudio"]
+	path = Libs/miniaudio
+	url = https://github.com/rafaelvaloto/Gamepad-Core-Audio.git

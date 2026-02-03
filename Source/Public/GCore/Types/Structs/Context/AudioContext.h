@@ -18,29 +18,89 @@ using namespace FGamepadAudio;
 
 #if !GAMEPAD_CORE_HAS_AUDIO
 // Minimal stubs when audio is disabled to allow compilation of unused fields/methods
-typedef struct { void* pUserData; struct { int channels; } playback; } ma_device;
-typedef struct { int dummy; } ma_device_id;
+typedef struct
+{
+	void* pUserData;
+	struct
+	{
+		int channels;
+	} playback;
+} ma_device;
+typedef struct
+{
+	int dummy;
+} ma_device_id;
 typedef unsigned int ma_uint32;
-typedef struct { int dummy; } ma_pcm_rb;
-typedef struct { struct { int format; int channels; const ma_device_id* pDeviceID; } playback; int sampleRate; void (*dataCallback)(ma_device*, void*, const void*, ma_uint32); void* pUserData; } ma_device_config;
+typedef struct
+{
+	int dummy;
+} ma_pcm_rb;
+typedef struct
+{
+	struct
+	{
+		int format;
+		int channels;
+		const ma_device_id* pDeviceID;
+	} playback;
+	int sampleRate;
+	void (*dataCallback)(ma_device*, void*, const void*, ma_uint32);
+	void* pUserData;
+} ma_device_config;
 
 #define MA_SUCCESS 0
 #define ma_format_f32 0
 #define ma_device_type_playback 0
 
-inline int ma_pcm_rb_available_read(void*) { return 0; }
-inline int ma_pcm_rb_acquire_read(void*, void*, void**) { return 0; }
-inline int ma_pcm_rb_commit_read(void*, int) { return 0; }
-inline int ma_pcm_rb_init(int, int, int, void*, void*, void*) { return 0; }
-inline void ma_pcm_rb_uninit(void*) {}
-inline ma_device_config ma_device_config_init(int) { ma_device_config c = {0}; return c; }
-inline int ma_device_init(void*, void*, void*) { return 0; }
-inline void ma_device_uninit(void*) {}
-inline int ma_device_start(void*) { return 0; }
-inline int ma_device_stop(void*) { return 0; }
-inline int ma_pcm_rb_available_write(void*) { return 0; }
-inline int ma_pcm_rb_acquire_write(void*, void*, void**) { return 0; }
-inline int ma_pcm_rb_commit_write(void*, int) { return 0; }
+inline int ma_pcm_rb_available_read(void*)
+{
+	return 0;
+}
+inline int ma_pcm_rb_acquire_read(void*, void*, void**)
+{
+	return 0;
+}
+inline int ma_pcm_rb_commit_read(void*, int)
+{
+	return 0;
+}
+inline int ma_pcm_rb_init(int, int, int, void*, void*, void*)
+{
+	return 0;
+}
+inline void ma_pcm_rb_uninit(void*)
+{}
+inline ma_device_config ma_device_config_init(int)
+{
+	ma_device_config c = {0};
+	return c;
+}
+inline int ma_device_init(void*, void*, void*)
+{
+	return 0;
+}
+inline void ma_device_uninit(void*)
+{}
+inline int ma_device_start(void*)
+{
+	return 0;
+}
+inline int ma_device_stop(void*)
+{
+	return 0;
+}
+inline int ma_pcm_rb_available_write(void*)
+{
+	return 0;
+}
+inline int ma_pcm_rb_acquire_write(void*, void*, void**)
+{
+	return 0;
+}
+inline int ma_pcm_rb_commit_write(void*, int)
+{
+	return 0;
+}
 #endif
 
 /**

@@ -9,6 +9,7 @@
 #include "GCore/Types/ECoreGamepad.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "GCore/Utils/CR32.h"
+#include "GCore/Utils/SoDefines.h"
 #include <iostream>
 #include <ostream>
 
@@ -57,7 +58,7 @@ void FGamepadOutput::OutputDualShock(FDeviceContext* DeviceContext)
 	}
 
 	{
-		std::lock_guard<std::mutex> LockGuard(DeviceContext->OutputMutex);
+		gc_lock::lock_guard<gc_lock::mutex> LockGuard(DeviceContext->OutputMutex);
 		IPlatformHardwareInfo::Get().Write(DeviceContext);
 	}
 }
@@ -81,7 +82,7 @@ void FGamepadOutput::OutputDualSense(FDeviceContext* DeviceContext)
 	}
 
 	{
-		std::lock_guard LockGuard(DeviceContext->OutputMutex);
+		gc_lock::lock_guard<gc_lock::mutex> LockGuard(DeviceContext->OutputMutex);
 
 		unsigned char* Output = &MutableBuffer[Padding];
 		Output[0] = HidOut->Feature.VibrationMode;

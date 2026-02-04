@@ -8,6 +8,7 @@
 #include "GCore/Types/ECoreGamepad.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "GCore/Utils/CR32.h"
+#include "GCore/Utils/SoDefines.h"
 #include "GImplementations/Utils/GamepadInput.h"
 #include "GImplementations/Utils/GamepadOutput.h"
 #include "GImplementations/Utils/GamepadSensors.h"
@@ -78,7 +79,7 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 	if (DSContext->ConnectionType == EDSDeviceConnection::Bluetooth)
 	{
 		{
-			std::lock_guard LockGuard(DSContext->OutputMutex);
+			gc_lock::lock_guard<gc_lock::mutex> LockGuard(DSContext->OutputMutex);
 			unsigned char* MutableBuffer = DSContext->GetRawOutputBuffer();
 			size_t Padding = 2;
 			MutableBuffer[0] = 0x31;
@@ -101,7 +102,7 @@ bool FDualSenseLibrary::Initialize(const FDeviceContext& Context)
 			}
 
 			IPlatformHardwareInfo::Get().Write(DSContext);
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			gc_sync::sleep_ms(50);
 		}
 		DSContext->Output.Feature.VibrationMode = 0xFF;
 		DSContext->Output.Feature.FeatureMode = 0x57;

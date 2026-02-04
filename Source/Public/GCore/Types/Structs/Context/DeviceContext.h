@@ -9,6 +9,7 @@
 #include "AudioContext.h"
 #include "InputContext.h"
 #include "OutputContext.h"
+#include "GCore/Utils/SoDefines.h"
 
 using FPlatformDeviceHandle = void*;
 #define INVALID_PLATFORM_HANDLE nullptr
@@ -232,8 +233,8 @@ struct FDeviceContext
 	 * essential for maintaining data consistency and avoiding concurrent
 	 * modification issues.
 	 */
-	mutable std::mutex InputMutex;
-	mutable std::mutex OutputMutex;
+ mutable gc_lock::mutex InputMutex;
+ mutable gc_lock::mutex OutputMutex;
 
 	unsigned char* GetRawOutputBuffer() { return BufferOutput; }
 
@@ -324,7 +325,7 @@ public:
 
 	FInputContext* GetInputState()
 	{
-		std::lock_guard<std::mutex> Lock(InputMutex);
+		gc_lock::lock_guard<gc_lock::mutex> Lock(InputMutex);
 		return &InputGameThread;
 	}
 
@@ -334,7 +335,7 @@ public:
 	// [BackgroundThread] change buffers
 	void SwapInputBuffers()
 	{
-		std::lock_guard<std::mutex> Lock(InputMutex);
+		gc_lock::lock_guard<gc_lock::mutex> Lock(InputMutex);
 		InputGameThread = Input;
 	}
 };

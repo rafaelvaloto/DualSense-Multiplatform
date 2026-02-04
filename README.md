@@ -108,23 +108,16 @@ Built for high-performance engines where every millisecond counts.
 ---
 
 ## 🎯 Examples
-**Gamepad-Core** is production-ready and currently powers projects used by the gaming community.
+**Gamepad-Core** is production-ready and currently powers projects used by the gaming community, from high-end Game Engines to low-power Microcontrollers.
 
-### 🛹 [Session: Skate Sim - Native DualSense Mod](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
-A specialized implementation tailored for *Session: Skate Sim*, demonstrating the library's ability to enhance gameplay physics.
+### 🍓 [Raspberry Pi Pico W — Microcontroller Integration](https://github.com/rafaelvaloto/Pico_W-Dualsense)
+Demonstrating the extreme portability of the library, the **same core logic** used in AAA game engines runs perfectly on a **Pico W with only 2MB of flash**.
 
-* **Truck Physics on Triggers:** Adaptive triggers stiffen dynamically to simulate truck resistance while turning.
-* **Haptic Texture:** Audio-based haptics allow players to "feel" the pop, landing, and grind friction on different surfaces.
+*   **Bare Metal Performance:** Low-latency HID communication without an OS.
+*   **Memory Efficient:** Optimized footprint for embedded systems with limited RAM/Flash.
+*   **DualSense Wireless:** Support for Bluetooth HID on the Pico W cyw43 chip.
 
-### 🚀 Build Mods for Your Favorite Games
-Want to create a similar mod for another game?
-
-The **Session Mod** repository above serves as a perfect **Template**. You can fork it or review the source code to learn how to:
-1.  Initialize the GamepadCore library within a DLL.
-2.  Hook into game events (like Unreal Engine physics).
-3.  Translate game audio/physics into Haptics and Trigger effects.
-
-**[👉 Start by cloning the Session Mod Repo](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)**
+**[👉 Check out the Pico W implementation](https://github.com/rafaelvaloto/PicoW-GamepadCore)**
 
 ### 🏆 Unreal Engine — Primary Integration
 **[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense/tree/v2.0.0-pre-release)** (v2.0.0-pre-release)
@@ -152,6 +145,22 @@ A native O3DE Gem that brings DualSense and DualShock 4 support to the Open 3D E
 **[Godot-Dualsense](https://github.com/rafaelvaloto/Godot-Dualsense)** (GDExtension for Godot 4.x)
 
 A prototype demonstrating Gamepad-Core's portability through native GDExtension bindings.  Shows how the library can be wrapped for any scripting environment.
+
+### 🛹 [Session: Skate Sim - Native DualSense Mod](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
+A specialized implementation tailored for *Session: Skate Sim*, demonstrating the library's ability to enhance gameplay physics.
+
+* **Truck Physics on Triggers:** Adaptive triggers stiffen dynamically to simulate truck resistance while turning.
+* **Haptic Texture:** Audio-based haptics allow players to "feel" the pop, landing, and grind friction on different surfaces.
+
+#### 🚀 Build Mods for Your Favorite Games
+Want to create a similar mod for another game?
+
+The **Session Mod** repository above serves as a perfect **Template**. You can fork it or review the source code to learn how to:
+1.  Initialize the GamepadCore library within a DLL.
+2.  Hook into game events (like Unreal Engine physics).
+3.  Translate game audio/physics into Haptics and Trigger effects.
+
+**[👉 Start by cloning the Session Mod Repo](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)**
 
 ---
 

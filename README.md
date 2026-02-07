@@ -110,12 +110,38 @@ Built for high-performance engines where every millisecond counts.
 ## 🎯 Examples
 **Gamepad-Core** is production-ready and currently powers projects used by the gaming community, from high-end Game Engines to low-power Microcontrollers.
 
-### 🍓 [Raspberry Pi Pico W — Microcontroller Integration](https://github.com/rafaelvaloto/Pico_W-Dualsense) `Work in Progress`
-Demonstrating the extreme portability and architectural efficiency of the library, the same core logic used in AAA game engines runs perfectly on a **Pico W (264KB RAM / 2MB Flash)**.
+## 🍓 Raspberry Pi Pico W — Microcontroller Integration
 
-*   **Bare Metal Performance:** Low-latency HID communication without an OS.
-*   **Memory Efficient:** Optimized footprint for embedded systems with limited RAM/Flash.
-*   **DualSense Wireless:** Support for Bluetooth HID on the Pico W cyw43 chip.
+**Work in Progress** — Demonstrating the extreme portability and architectural efficiency of the library, the same core logic used in AAA game engines runs perfectly on a Pico W (264KB RAM / 2MB Flash).
+
+### Key Achievements
+
+- **Bare Metal Performance**: Low-latency HID communication without an OS
+- **Memory Efficient**: Optimized footprint for embedded systems with limited RAM/Flash
+- **DualSense Wireless**: Full Bluetooth Classic support on the Pico W cyw43 chip
+
+### 🎮 Advanced DualSense Features Fully Implemented
+
+The Pico W implementation includes **complete support** for all advanced DualSense capabilities:
+
+#### ✅ Input Features
+- **Gyroscope & Accelerometer**: Full 6-axis motion sensing with real-time data
+- **Touchpad**: Multi-touch input detection with coordinate tracking
+- **Battery Status**: Real-time battery level and charging state monitoring
+- **All Standard Inputs**: Buttons (×17), analog sticks, triggers, D-pad
+
+#### ✅ Output Features
+- **Adaptive Triggers**: Full trigger effect system with multiple modes:
+   - Feedback (Rigid/Soft resistance)
+   - Weapon (Semi-automatic, Machine gun, Bow)
+   - Vibration (Gallop, Automatic buzz)
+   - Dynamic tension and resistance patterns
+- **LED Control**:
+   - Lightbar RGB color customization
+   - Player LED indicators (5 configurable LEDs)
+- **Haptic Feedback**:
+   - Independent left/right motor control
+   - Variable intensity rumble (soft to heavy)
 
 **[👉 Check out the Pico W implementation](https://github.com/rafaelvaloto/Pico_W-Dualsense)**
 

@@ -117,10 +117,10 @@ Demonstrating the extreme portability of the library, the **same core logic** us
 *   **Memory Efficient:** Optimized footprint for embedded systems with limited RAM/Flash.
 *   **DualSense Wireless:** Support for Bluetooth HID on the Pico W cyw43 chip.
 
-**[👉 Check out the Pico W implementation](https://github.com/rafaelvaloto/PicoW-GamepadCore)**
+**[👉 Check out the Pico W implementation](https://github.com/rafaelvaloto/Pico_W-Dualsense)**
 
 ### 🏆 Unreal Engine — Primary Integration
-**[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense/tree/v2.0.0-pre-release)** (v2.0.0-pre-release)
+**[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense)** (v2.0.3)
 
 The flagship plugin bringing native DualSense support to UE5 via Blueprint and C++.
 * ✅ Live Adaptive Trigger prototyping via Data Tables.

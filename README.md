@@ -111,7 +111,7 @@ Built for high-performance engines where every millisecond counts.
 **Gamepad-Core** is production-ready and currently powers projects used by the gaming community, from high-end Game Engines to low-power Microcontrollers.
 
 ### 🍓 [Raspberry Pi Pico W — Microcontroller Integration](https://github.com/rafaelvaloto/Pico_W-Dualsense) `Work in Progress`
-Demonstrating the extreme portability of the library, the **same core logic** used in AAA game engines runs perfectly on a **Pico W with only 2MB of flash**.
+Demonstrating the extreme portability of the library, the same core logic used in AAA game engines runs perfectly on a Pico W with only **264KB of RAM** and **2MB of flash**.
 
 *   **Bare Metal Performance:** Low-latency HID communication without an OS.
 *   **Memory Efficient:** Optimized footprint for embedded systems with limited RAM/Flash.

@@ -114,6 +114,8 @@ Built for high-performance engines where every millisecond counts.
 
 Demonstrating the extreme portability and architectural efficiency of the library, the same core logic used in AAA game engines runs perfectly on a **Pico W (264KB RAM / 2MB Flash)**.
 
+### 🎥 [Click and watch the example video on YouTube.](https://www.youtube.com/watch?v=GgKDtwfS6v4)
+
 ### Key Achievements
 
 - **Bare Metal Performance**: Low-latency HID communication without an OS

@@ -22,7 +22,7 @@
  * @note Ensure proper initialization of the configuration before using it
  *       with the audio processing pipeline.
  */
-struct FAudioContext
+struct FAudioHaptics
 {
 	/**
 	 * @brief Represents a specific operational state or behavior mode of a system

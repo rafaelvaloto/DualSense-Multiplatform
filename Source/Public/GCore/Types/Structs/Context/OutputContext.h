@@ -7,7 +7,7 @@
 #include "../Config/GamepadLightbar.h"
 #include "../Config/GamepadPlayerLed.h"
 #include "../Config/GamepadRumbles.h"
-#include "GCore/Types/Structs/Config/AudioContext.h"
+#include "GCore/Types/Structs/Config/AudioHaptics.h"
 #include "GCore/Types/Structs/Config/GamepadFeature.h"
 #include "GCore/Types/Structs/Config/GamepadLigthbarFlash.h"
 #include "GCore/Types/Structs/Config/GamepadTriggersHaptic.h"
@@ -104,7 +104,7 @@ struct FOutputContext
 	 * - MicStatus: Indicates the status of the microphone, such as enabled or
 	 * disabled.
 	 */
-	FAudioContext Audio;
+	FAudioHaptics Audio;
 	/**
 	 * Represents configuration details for device features such as vibration,
 	 * rumble, and trigger settings.

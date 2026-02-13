@@ -104,18 +104,16 @@ Built for high-performance engines where every millisecond counts.
 * **Extensible:** Implement simple platform policies to add new support.
 * **Test Suite:** Includes a standalone integration test target (CMake) to verify features on physical hardware.
 * **MIT Licensed:** Free for commercial and open-source use.
-
 ---
 
 **Gamepad-Core** is production-ready and currently powers projects used by the gaming community, from high-end Game Engines to low-power Microcontrollers.
 
+---
 ## 🍓 Raspberry Pi Pico W — Microcontroller Integration
 
 Demonstrating the extreme portability and architectural efficiency of the library, the same core logic used in AAA game engines runs perfectly on a **Pico W (264KB RAM / 2MB Flash)**.
 
 ### 🎥 [Click and watch the example video on YouTube.](https://www.youtube.com/watch?v=GgKDtwfS6v4)
-
-### 🕹️ Advanced DualSense Features Fully Implemented
 
 The Pico W implementation includes **complete support** for all advanced DualSense capabilities:
 
@@ -126,11 +124,11 @@ The Pico W implementation includes **complete support** for all advanced DualSen
 | **System:** Battery & Charging status | **RGB Lightbar:** Full color & Player LED control |
 | **Standard:** All 17 buttons + Analog sticks | **Architecture:** Production-ready C++20 |
 
----
-
 **[👉 Check out the Pico W implementation](https://github.com/rafaelvaloto/Pico_W-Dualsense)**
 
 The Pico W implementation uses the exact same C++ core files as the Unreal and O3DE integrations, with zero logic changes.
+
+---
 
 ## 🏆 Unreal Engine — Primary Integration
 **[Unreal-Dualsense](https://github.com/rafaelvaloto/Unreal-Dualsense)** (v2.0.3)
@@ -140,6 +138,7 @@ The flagship plugin bringing native DualSense support to UE5 via Blueprint and C
 * ✅ Real-time Audio-to-Haptics submix processing.
 * ✅ Native Input System integration for Force Feedback & Motion.
 
+---
 ##  ⚙️ O3DE (Open 3D Engine) — Gem Integration
 
 **[O3DE-Dualsense](https://github.com/rafaelvaloto/o3de-dualsense)** (O3DE Gem)
@@ -153,19 +152,17 @@ A native O3DE Gem that brings DualSense and DualShock 4 support to the Open 3D E
 - ✅ Native O3DE EBus system integration
 - ✅ Blueprint-compatible scripting bindings
 
-##  🧩 Godot Engine — Prototype Integration
-
-**[Godot-Dualsense](https://github.com/rafaelvaloto/Godot-Dualsense)** (GDExtension for Godot 4.x)
+---
 
 A prototype demonstrating Gamepad-Core's portability through native GDExtension bindings.  Shows how the library can be wrapped for any scripting environment.
 
-##  🛹 [Session: Skate Sim - Native DualSense Mod](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)
+**[👉 Godot-Dualsense  (GDExtension for Godot 4.x)](https://github.com/rafaelvaloto/Godot-Dualsense)**
+
 A specialized implementation tailored for *Session: Skate Sim*, demonstrating the library's ability to enhance gameplay physics.
 
 **[👉 Start by cloning the Session Mod Repo](https://github.com/rafaelvaloto/Gaming-Mods-Dualsense)**
 
 ---
-
 
 ## 📦 Installation & Submodules
 

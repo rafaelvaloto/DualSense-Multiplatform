@@ -122,28 +122,18 @@ Demonstrating the extreme portability and architectural efficiency of the librar
 - **Memory Efficient**: Optimized footprint for embedded systems with limited RAM/Flash
 - **DualSense Wireless**: Full Bluetooth Classic support on the Pico W cyw43 chip
 
-### 🎮 Advanced DualSense Features Fully Implemented
+### 🕹️ Advanced DualSense Features Fully Implemented
 
 The Pico W implementation includes **complete support** for all advanced DualSense capabilities:
 
-#### ✅ Input Features
-- **Gyroscope & Accelerometer**: Full 6-axis motion sensing with real-time data
-- **Touchpad**: Multi-touch input detection with coordinate tracking
-- **Battery Status**: Real-time battery level and charging state monitoring
-- **All Standard Inputs**: Buttons (×17), analog sticks, triggers, D-pad
+| **Input** | **Output (Haptics & More)** |
+| :--- | :--- |
+| **Motion:** Full 6-Axis Gyro & Accel | **Adaptive Triggers:** Weapon, Feedback & Buzz modes |
+| **Touchpad:** Multi-touch & Coordinates | **Haptic Feedback:** Dual independent motor control |
+| **System:** Battery & Charging status | **RGB Lightbar:** Full color & Player LED control |
+| **Standard:** All 17 buttons + Analog sticks | **Architecture:** Production-ready C++20 |
 
-#### ✅ Output Features
-- **Adaptive Triggers**: Full trigger effect system with multiple modes:
-   - Feedback (Rigid/Soft resistance)
-   - Weapon (Semi-automatic, Machine gun, Bow)
-   - Vibration (Gallop, Automatic buzz)
-   - Dynamic tension and resistance patterns
-- **LED Control**:
-   - Lightbar RGB color customization
-   - Player LED indicators (5 configurable LEDs)
-- **Haptic Feedback**:
-   - Independent left/right motor control
-   - Variable intensity rumble (soft to heavy)
+---
 
 **[👉 Check out the Pico W implementation](https://github.com/rafaelvaloto/Pico_W-Dualsense)**
 

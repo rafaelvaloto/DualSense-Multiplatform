@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎮 Gamepad-Core
+# 🎮 Dualsense-Multiplatform
 
 ### The Ultimate Cross-Platform DualSense & DualShock API
 **Pure C++ • Zero Dependencies • Engine Agnostic**
